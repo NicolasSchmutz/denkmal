@@ -1,7 +1,7 @@
 <div class="error">
-Error: <?php echo $this->escape($this->msg); ?>
-<?php if (!empty($this->stack)) : ?>
-	<hr />
-	<pre><?php echo $this->escape($this->stack) ?></pre>
-<?php endif ?>
+	Error: <?php echo $this->escape($this->msg); ?>
+	<?php if (!empty($this->stack)) : ?>
+		<hr />
+		<pre><?php echo $this->escape($this->stack) ?></pre>
+	<?php endif ?>
 </div>

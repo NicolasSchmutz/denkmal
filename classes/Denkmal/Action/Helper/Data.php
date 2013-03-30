@@ -4,11 +4,8 @@
 /**
  * Action-Helper to format data which is sent to client (json)
  */
-class Denkmal_Action_Helper_Data extends Zend_Controller_Action_Helper_Abstract
-{
+class Denkmal_Action_Helper_Data extends Zend_Controller_Action_Helper_Abstract {
 
-
-	
 	/**
 	 * Return events-data
 	 *
@@ -26,7 +23,7 @@ class Denkmal_Action_Helper_Data extends Zend_Controller_Action_Helper_Abstract
 
 	/**
 	 * Return locations-data
-	 * 
+	 *
 	 * @param List_Locations $locations Locations
 	 * @return array Locations-data
 	 */
@@ -34,21 +31,21 @@ class Denkmal_Action_Helper_Data extends Zend_Controller_Action_Helper_Abstract
 		$data = array();
 		foreach ($locations as $location) {
 			if ($position = $location->getPosition()) {
-				$data[$location->getId()] = 
-					array(	'name' => $location->getName(),
-							'url' => $location->getUrl(),
-							'show' => $location->getShowalways(),
-							'x' => $position->getX(),
-							'y' => $position->getY(),
+				$data[$location->getId()] =
+						array('name' => $location->getName(),
+							  'url'  => $location->getUrl(),
+							  'show' => $location->getShowalways(),
+							  'x'    => $position->getX(),
+							  'y'    => $position->getY(),
 						);
 			}
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * Return audioplayer-data
-	 * 
+	 *
 	 * @param List_Events $events Events for audio-playback
 	 * @return array Audiplayer-data
 	 */
@@ -61,5 +58,4 @@ class Denkmal_Action_Helper_Data extends Zend_Controller_Action_Helper_Abstract
 		}
 		return $data;
 	}
-
 }

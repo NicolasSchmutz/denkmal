@@ -3,15 +3,13 @@
 require_once 'List/Abstract.php';
 require_once 'Promotion.php';
 
-
 /**
  * List_Promotions Model
  *
  */
-class List_Promotions extends List_Abstract
-{
-	const TYPE_ALL = self::TYPE_DEFAULT;
+class List_Promotions extends List_Abstract {
 
+	const TYPE_ALL = self::TYPE_DEFAULT;
 
 	/**
 	 * Load promotions
@@ -23,7 +21,7 @@ class List_Promotions extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid promotions-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid promotions-list type (' . $this->_type . ')');
 				break;
 		}
 	}
@@ -46,5 +44,4 @@ class List_Promotions extends List_Abstract
 
 		return $items;
 	}
-
 }

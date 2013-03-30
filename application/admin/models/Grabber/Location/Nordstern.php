@@ -7,6 +7,7 @@ require_once 'Grabber/Location.php';
  *
  */
 class Grabber_Location_Nordstern extends Grabber_Location {
+
 	/**
 	 * Set up grabber
 	 */
@@ -41,7 +42,5 @@ class Grabber_Location_Nordstern extends Grabber_Location {
 			$description = new Grabber_Description(implode(', ', $artists), $title);
 			$this->_addEvent($description, $from);
 		}
-
 	}
-
 }

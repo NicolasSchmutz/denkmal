@@ -7,6 +7,7 @@ require_once 'Grabber/Location.php';
  *
  */
 class Grabber_Location_Agora extends Grabber_Location {
+
 	/**
 	 * Set up grabber
 	 */
@@ -31,7 +32,5 @@ class Grabber_Location_Agora extends Grabber_Location {
 			$description = new Grabber_Description($main);
 			$this->_addEvent($description, $from);
 		}
-
 	}
-
 }

@@ -1,6 +1,5 @@
 <?php echo $this->partial('utils/nav.phtml', array('active' => 'home')); ?>
 
-
 <div class="frame">
 	<h3>Sound of the moment</h3>
 	<?php echo $this->partial('utils/list/events.phtml', array('events' => array($this->sm))) ?>
@@ -33,18 +32,17 @@ if ($this->eventsDisabled->num() > 0) {
 }
 ?>
 
-
 <div class="frame">
 	<?php echo $this->adminNavDays($this->day) ?> <?php echo $this->day($this->day, false) ?>
 	<div class="clearfix"></div>
-	
+
 	<?php
 	if ($this->eventsBlocked->num() > 0) {
 		echo '<h3>Blocked</h3>';
 		echo $this->partial('utils/list/events.phtml', array('events' => $this->eventsBlocked));
 	}
 	?>
-	
+
 	<h3>Enabled</h3>
 	<?php echo $this->partial('utils/list/events.phtml', array('events' => $this->events)) ?>
 </div>

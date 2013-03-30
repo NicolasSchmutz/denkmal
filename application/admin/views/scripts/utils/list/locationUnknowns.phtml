@@ -1,8 +1,8 @@
 <?php
 foreach ($this->locationUnknowns as $i => $locationUnknown) {
 	echo $locationUnknown->getName();
-	echo ' (' .$locationUnknown->getHits(). ')';
-	if ($i < $this->locationUnknowns->num()-1) {
+	echo ' (' . $locationUnknown->getHits() . ')';
+	if ($i < $this->locationUnknowns->num() - 1) {
 		echo ', ';
 	}
 }

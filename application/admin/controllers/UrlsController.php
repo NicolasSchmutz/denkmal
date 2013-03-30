@@ -4,17 +4,14 @@
 /**
  * URLs controller
  */
-class Admin_UrlsController extends Zend_Controller_Action
-{
+class Admin_UrlsController extends Zend_Controller_Action {
 
-	public function init()
-	{
+	public function init() {
 		$this->_helper->contextSwitch()
-			->initContext();
+				->initContext();
 
 		$this->view->headTitle('DENKMAL.ORG Admin');
 	}
-
 
 	/**
 	 * Index page
@@ -26,22 +23,20 @@ class Admin_UrlsController extends Zend_Controller_Action
 		$this->view->urls = $urls;
 	}
 
-
 	public function delAction() {
 		$id = (int) $this->_getParam('id');
 
 		$db = Denkmal_Db::get();
-		$db->delete('url', 'id='.$id);
+		$db->delete('url', 'id=' . $id);
 		Denkmal_Cache::clean();
 
 		$this->_redirect('/admin/urls/');
 	}
 
-
 	public function createAction() {
 		$name = $this->_getParam('name');
 		$url = $this->_getParam('url');
-		$onlyifmarked = (int)($this->_getParam('onlyifmarked') == 'on');
+		$onlyifmarked = (int) ($this->_getParam('onlyifmarked') == 'on');
 
 		$db = Denkmal_Db::get();
 		$db->insert('url', array('name' => $name, 'url' => $url, 'onlyifmarked' => $onlyifmarked));
@@ -49,5 +44,4 @@ class Admin_UrlsController extends Zend_Controller_Action
 
 		$this->_redirect('/admin/urls/');
 	}
-
 }

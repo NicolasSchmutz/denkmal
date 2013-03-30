@@ -7,25 +7,21 @@ require_once 'List/Weblinks.php';
 require_once 'Event.php';
 require_once 'Promotion.php';
 
-
 /**
  * Index controller
  *
  * Events page
  */
-class IndexController extends Zend_Controller_Action
-{
+class IndexController extends Zend_Controller_Action {
 
-	public function init()
-	{
+	public function init() {
 		$this->_helper->layout->disableLayout();
 		$this->_helper->contextSwitch()
-			->addActionContext('index', array('json', 'mobile'))
-			->addActionContext('search', array('json'))
-			->addActionContext('promotion', array('json'))
-			->initContext();
+				->addActionContext('index', array('json', 'mobile'))
+				->addActionContext('search', array('json'))
+				->addActionContext('promotion', array('json'))
+				->initContext();
 	}
-
 
 	/**
 	 * Events page
@@ -59,9 +55,6 @@ class IndexController extends Zend_Controller_Action
 		$this->view->headTitle('DENKMAL.ORG Eventkalender');
 	}
 
-
-
-
 	/**
 	 * Search request
 	 */
@@ -73,7 +66,6 @@ class IndexController extends Zend_Controller_Action
 		$this->view->audiosData = $this->_helper->data->audios($events);
 		$this->view->events = $events;
 	}
-
 
 	/**
 	 * Submit promotion request
@@ -104,21 +96,19 @@ class IndexController extends Zend_Controller_Action
 			}
 			$promotionEntry->save();
 
-			setcookie('promotion_'.$promotion->getId(), 1, time()+60*60*24*365, '/');
+			setcookie('promotion_' . $promotion->getId(), 1, time() + 60 * 60 * 24 * 365, '/');
 
 			$this->view->success = true;
 			$this->view->msg = $promotion->getTextThanks();
-		} catch(Denkmal_Exception $e) {
+		} catch (Denkmal_Exception $e) {
 			$this->view->success = false;
 			$this->view->msg = $e->getMessage();
 		}
 	}
-
 
 	/*
 	 * Google verification
 	 */
 	public function googleverificationAction() {
 	}
-
 }

@@ -5,19 +5,18 @@ require_once 'Grabber/String.php';
 /**
  * Description used by grabber
  *
- */ 
-class Grabber_Description
-{
+ */
+class Grabber_Description {
+
 	private $_title = null;
 	private $_main = null;
 	private $_genres = null;
-	
-	
+
 	/**
 	 * Set up a description
-	 * 
-	 * @param string $main Main event description
-	 * @param string $title Event title 
+	 *
+	 * @param string         $main   Main event description
+	 * @param string         $title  Event title
 	 * @param Grabber_Genres $genres Event genres
 	 */
 	function __construct($main = null, $title = null, Grabber_Genres $genres = null) {
@@ -31,7 +30,7 @@ class Grabber_Description
 			$this->_genres = $genres;
 		}
 	}
-	
+
 	private function _parseString($str) {
 		$str = strip_tags($str);
 		$str = preg_replace('/\r?\n\r?/', ' ', $str);
@@ -44,7 +43,7 @@ class Grabber_Description
 		$str = trim($str);
 		return $str;
 	}
-	
+
 	private function _endOnPunctuation($str, $character = '.') {
 		if (empty($str)) {
 			return '';
@@ -55,7 +54,7 @@ class Grabber_Description
 		}
 		return $str;
 	}
-	
+
 	public function __toString() {
 		$description = '';
 		if ($this->_title) {
@@ -72,6 +71,5 @@ class Grabber_Description
 			$description .= substr($this->_genres, 0, 100);
 		}
 		return $description;
-	} 
-	
-} 
+	}
+}

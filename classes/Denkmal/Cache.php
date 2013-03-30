@@ -7,8 +7,7 @@
  * Wraps Zend_Cache
  *
  */
-class Denkmal_Cache
-{
+class Denkmal_Cache {
 
 	private static $_prefix;
 
@@ -26,19 +25,17 @@ class Denkmal_Cache
 	 */
 	private static $_internalCache = array();
 
-
 	/**
-	* Create and return the Cache-object
-	*
-	* @return Zend_Cache_Core The cache-object
-	*/
+	 * Create and return the Cache-object
+	 *
+	 * @return Zend_Cache_Core The cache-object
+	 */
 	public static function get() {
 		if (!isset(self::$_externalCache)) {
 			self::_setUp();
 		}
 		return self::$_externalCache;
 	}
-
 
 	/**
 	 * Test if a cache is available for the given id and (if yes) return it (false else).
@@ -51,26 +48,24 @@ class Denkmal_Cache
 		if (isset(self::$_internalCache[$id])) {
 			return self::$_internalCache[$id];
 		}
-		@$data = self::get()->load(self::$_prefix.$id);
+		@$data = self::get()->load(self::$_prefix . $id);
 		self::$_internalCache[$id] = $data;
 		return $data;
 	}
-
 
 	/**
 	 * Save some data in cache.
 	 * Proxies to Zend_Cache::save()
 	 *
-	 * @param mixed $data Data to put in cache
-	 * @param string $id Cache id
-	 * @param int $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
+	 * @param mixed  $data             Data to put in cache
+	 * @param string $id               Cache id
+	 * @param int    $specificLifetime If != false, set a specific lifetime for this cache record (null => infinite lifetime)
 	 * @return boolean True if no problem
 	 */
 	public static function save($data, $id, $specificLifetime = false) {
 		self::$_internalCache[$id] = $data;
-		return self::get()->save($data, self::$_prefix.$id, array(), $specificLifetime);
+		return self::get()->save($data, self::$_prefix . $id, array(), $specificLifetime);
 	}
-
 
 	/**
 	 * Remove a cache
@@ -81,7 +76,7 @@ class Denkmal_Cache
 	 */
 	public static function remove($id) {
 		unset(self::$_internalCache[$id]);
-		return self::get()->remove(self::$_prefix.$id);
+		return self::get()->remove(self::$_prefix . $id);
 	}
 
 	/**
@@ -94,19 +89,18 @@ class Denkmal_Cache
 		return self::get()->clean(Zend_Cache::CLEANING_MODE_ALL);
 	}
 
-
 	/**
-	* Set up the Cache-object.
-	*
-	* @return Zend_Cache_Core The cache-object
-	* @throws My_Exception If creation fails
-	*/
+	 * Set up the Cache-object.
+	 *
+	 * @return Zend_Cache_Core The cache-object
+	 * @throws My_Exception If creation fails
+	 */
 	private static function _setUp() {
 		$config = Zend_Registry::get('config');
 		self::$_prefix = $config->cache->prefix;
 		$frontendOptions = array(
-			'caching' => $config->cache->enabled,
-			'lifetime' => $config->cache->lifetime,
+			'caching'                 => $config->cache->enabled,
+			'lifetime'                => $config->cache->lifetime,
 			'automatic_serialization' => true,
 		);
 		try {
@@ -120,12 +114,11 @@ class Denkmal_Cache
 				);
 				$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 			}
-		} catch(Exception $e) {
+		} catch (Exception $e) {
 			require_once 'Exception.php';
-			throw new Denkmal_Exception('Cannot setup cache: ' .$e->getMessage());
+			throw new Denkmal_Exception('Cannot setup cache: ' . $e->getMessage());
 		}
 		self::$_externalCache = $cache;
 		return $cache;
 	}
-
 }

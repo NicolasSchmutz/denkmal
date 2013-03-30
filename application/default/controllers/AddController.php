@@ -6,24 +6,20 @@ require_once 'List/Locations.php';
 require_once 'Event.php';
 require_once 'Location.php';
 
-
 /**
  * Add controller
  */
-class AddController extends Zend_Controller_Action
-{
+class AddController extends Zend_Controller_Action {
 
-	public function init()
-	{
+	public function init() {
 		$this->view->headLink()->appendStylesheet('/css/add.css');
 		$this->view->headScript()->appendFile('/js/add.js');
 
 		$this->_helper->contextSwitch()
-			->addActionContext('preview', 'json')
-			->addActionContext('events', 'json')
-			->initContext();
+				->addActionContext('preview', 'json')
+				->addActionContext('events', 'json')
+				->initContext();
 	}
-
 
 	/**
 	 * Add page
@@ -54,7 +50,6 @@ class AddController extends Zend_Controller_Action
 		$this->view->headTitle('DENKMAL.ORG Event hinzufügen');
 	}
 
-
 	/**
 	 * Event-preview
 	 */
@@ -64,10 +59,10 @@ class AddController extends Zend_Controller_Action
 		if ($from = $event->getFrom()) {
 			$morninghour = Zend_Registry::get('config')->morninghour;
 
-			if ($from->compareTime($morninghour.':00:00') < 0) {
+			if ($from->compareTime($morninghour . ':00:00') < 0) {
 				$fromDay = new Day(null, null, $from);
 				$fromDay->getDate()->subDay(1);
-				$this->view->notice = 'Dieser Event wird am <em>' .$this->view->day($fromDay). '</em> angezeigt (wegen frühmorgendlichem Anfang)!';
+				$this->view->notice = 'Dieser Event wird am <em>' . $this->view->day($fromDay) . '</em> angezeigt (wegen frühmorgendlichem Anfang)!';
 			}
 		}
 
@@ -79,19 +74,17 @@ class AddController extends Zend_Controller_Action
 	 * Events-list for location
 	 */
 	public function eventsAction() {
-		$locationId = intval( $this->_getParam('location_id') );
+		$locationId = intval($this->_getParam('location_id'));
 		$location = new Location($locationId);
 		$events = $location->getEvents();
 
 		$this->view->events = $events;
 	}
 
-
-
 	/**
 	 * Parse the event-adding-form
 	 *
-	 * @param Event $event The resulting event
+	 * @param Event    $event    The resulting event
 	 * @param Location $location The resulting location
 	 * @return array An array of error-msgs
 	 */
@@ -102,11 +95,13 @@ class AddController extends Zend_Controller_Action
 
 		$this->_request->setParamSources(array('_POST', '_GET'));
 
-		$locationId = intval( $this->getParam('location_id') );
+		$locationId = intval($this->getParam('location_id'));
 		$locationName = $this->getParam('location_name');
 		$locationPlace = $this->getParam('location_place');
 		$locationUrl = $this->getParam('location_url');
-			if (!$this->_hasParam('location_url')) $locationUrl = 'http://';
+		if (!$this->_hasParam('location_url')) {
+			$locationUrl = 'http://';
+		}
 		$fromDate = $this->getParam('from_date', $now->get('d.M.y'));
 		$fromTime = $this->getParam('from_time', '22:00');
 		$untilTime = $this->getParam('until_time');
@@ -114,26 +109,30 @@ class AddController extends Zend_Controller_Action
 
 		if (!Zend_Date::isDate($fromDate, 'd.M.y')) {
 			$errors[] = 'Ungültiges Datum';
-		} else if (!Zend_Date::isDate($fromTime, 'H:mm')) {
-			$errors[] = 'Ungültige Zeit';
 		} else {
-			$from = new Zend_Date($fromDate.' '.$fromTime, 'd.M.y H:mm');
-			if (!$event->setFrom($from)) {
-				$errors[] = 'Ungültiger Zeitpunkt';
+			if (!Zend_Date::isDate($fromTime, 'H:mm')) {
+				$errors[] = 'Ungültige Zeit';
+			} else {
+				$from = new Zend_Date($fromDate . ' ' . $fromTime, 'd.M.y H:mm');
+				if (!$event->setFrom($from)) {
+					$errors[] = 'Ungültiger Zeitpunkt';
+				}
 			}
 		}
 
 		if ($untilTime) {
 			if (!Zend_Date::isDate($untilTime, 'H:mm')) {
 				$errors[] = 'Ungültige End-Zeit';
-			} else if (isset($from)) {
-				$until = clone($from);
-				$until->setTime(0);
-				@$until->addTime($untilTime.':00');
-				if ($until->isEarlier($from)) {
-					$until->addDay(1);
+			} else {
+				if (isset($from)) {
+					$until = clone($from);
+					$until->setTime(0);
+					@$until->addTime($untilTime . ':00');
+					if ($until->isEarlier($from)) {
+						$until->addDay(1);
+					}
+					$event->setUntil($until);
 				}
-				$event->setUntil($until);
 			}
 		}
 
@@ -156,7 +155,7 @@ class AddController extends Zend_Controller_Action
 		} else {
 			try {
 				$location = new Location($locationId);
-			} catch(Denkmal_Exception $e) {
+			} catch (Denkmal_Exception $e) {
 				$errors[] = 'Ungültige location';
 			}
 		}
@@ -194,20 +193,20 @@ class AddController extends Zend_Controller_Action
 		return $errors;
 	}
 
-
 	/**
 	 * Return a request-param in sequence: POST, GET
-	 * @param string $key Param-key
+	 * @param string $key     Param-key
 	 * @param string $default OPTIONA Default-value
 	 * @return mixes The param-value OR null
 	 */
 	private function getParam($key, $default = null) {
 		if ($value = $this->_request->getPost($key)) {
 			return $value;
-		} else if ($value = $this->_request->getQuery($key)) {
-			return $value;
+		} else {
+			if ($value = $this->_request->getQuery($key)) {
+				return $value;
+			}
 		}
 		return $default;
 	}
-
 }

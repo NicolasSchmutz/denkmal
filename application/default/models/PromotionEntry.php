@@ -2,13 +2,12 @@
 
 require_once 'Promotion.php';
 
-
 /**
  * Promotion Entry
  *
  */
-class PromotionEntry
-{
+class PromotionEntry {
+
 	private $_data = array();
 
 	function __construct($id = null) {
@@ -31,7 +30,7 @@ class PromotionEntry
 		$this->_data = $db->fetchRow($sql, $id);
 
 		if (!$this->_data) {
-			throw new Denkmal_Exception("Promotion entry doesn't exist (" .$id.")");
+			throw new Denkmal_Exception("Promotion entry doesn't exist (" . $id . ")");
 		}
 	}
 
@@ -82,7 +81,6 @@ class PromotionEntry
 		}
 		return null;
 	}
-
 
 	/**
 	 * Set name
@@ -139,7 +137,6 @@ class PromotionEntry
 		return true;
 	}
 
-
 	/**
 	 * Save/create this promotion entry
 	 */
@@ -158,7 +155,7 @@ class PromotionEntry
 			$this->_load($db->lastInsertId('promotion_entry'));
 		} else {
 			// Update promotion entry
-			$db->update('promotion_entry', $data, 'id='.$this->getId());
+			$db->update('promotion_entry', $data, 'id=' . $this->getId());
 		}
 
 		Denkmal_Cache::clean();

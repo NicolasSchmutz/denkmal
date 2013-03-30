@@ -2,23 +2,21 @@
 
 require_once 'List/Events.php';
 
-
 /**
  * Day
  *
  */
-class Day
-{
+class Day {
+
 	private static $_weekdays = array('so', 'mo', 'di', 'mi', 'do', 'fr', 'sa');
 	private $_date;
-
 
 	/**
 	 * Construct an eventcalendar-day
 	 *
-	 * @param string $weekdayStr OPTIONAL The weekday ('Mo', 'Di', ...)
-	 * @param int $weekOffset OPTIONAL Add offset in weeks
-	 * @param Zend_Date $date OPTIONAL Set the base-date by a Zend_Date
+	 * @param string    $weekdayStr OPTIONAL The weekday ('Mo', 'Di', ...)
+	 * @param int       $weekOffset OPTIONAL Add offset in weeks
+	 * @param Zend_Date $date       OPTIONAL Set the base-date by a Zend_Date
 	 */
 	function __construct($weekdayStr = null, $weekOffset = null, $date = null) {
 		if (!$date) {
@@ -30,7 +28,7 @@ class Day
 		if ($weekdayStr) {
 			$weekday = array_search(strtolower($weekdayStr), self::$_weekdays);
 			$weekday_now = $date->get(Zend_Date::WEEKDAY_DIGIT);
-			$dayOffset = $weekday-$weekday_now;
+			$dayOffset = $weekday - $weekday_now;
 			if ($dayOffset < 0) {
 				$dayOffset += 7;
 			}
@@ -59,10 +57,10 @@ class Day
 	 * @param Zend_Date $date The date
 	 */
 	public function setDate($date) {
-		$this->_date = new Zend_Date( array('year' => $date->get(Zend_Date::YEAR),
-											'month' => $date->get(Zend_Date::MONTH),
-											'day' => $date->get(Zend_Date::DAY),
-											'hour' => 0 ) );
+		$this->_date = new Zend_Date(array('year'  => $date->get(Zend_Date::YEAR),
+										   'month' => $date->get(Zend_Date::MONTH),
+										   'day'   => $date->get(Zend_Date::DAY),
+										   'hour'  => 0));
 	}
 
 	/**
@@ -113,7 +111,6 @@ class Day
 		return null;
 	}
 
-
 	/**
 	 * Return current day (with "morninghour"-offset)
 	 *
@@ -134,7 +131,6 @@ class Day
 		return Zend_Date::now()->subHour($morninghour);
 	}
 
-
 	/**
 	 * String representation of the date
 	 *
@@ -143,5 +139,4 @@ class Day
 	public function __toString() {
 		return $this->_date->toString();
 	}
-
 }

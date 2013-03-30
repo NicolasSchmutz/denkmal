@@ -6,8 +6,8 @@
  * Promotion
  *
  */
-class Promotion
-{
+class Promotion {
+
 	private $_data = array();
 
 	function __construct($id = null) {
@@ -30,7 +30,7 @@ class Promotion
 		$this->_data = $db->fetchRow($sql, $id);
 
 		if (!$this->_data) {
-			throw new Denkmal_Exception("Promotion doesn't exist (" .$id.")");
+			throw new Denkmal_Exception("Promotion doesn't exist (" . $id . ")");
 		}
 	}
 
@@ -80,7 +80,7 @@ class Promotion
 		return $db->fetchOne('SELECT COUNT(1)
 								FROM promotion_entry e
 								WHERE e.promotionId=?'
-								, array($this->getId()));
+			, array($this->getId()));
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Promotion
 	 * @return boolean Has submitted
 	 */
 	public function getHasSubmitted() {
-		@$cookie = $_COOKIE['promotion_' .$this->getId()];
+		@$cookie = $_COOKIE['promotion_' . $this->getId()];
 		return (bool) $cookie;
 	}
 
@@ -130,7 +130,6 @@ class Promotion
 		}
 	}
 
-
 	/**
 	 * Set active
 	 *
@@ -141,7 +140,6 @@ class Promotion
 		$this->_data['active'] = (int) (boolean) $active;
 		return true;
 	}
-
 
 	/**
 	 * Save/create this event
@@ -162,7 +160,7 @@ class Promotion
 			$this->_load($db->lastInsertId('promotion'));
 		} else {
 			// Update promotion
-			$db->update('promotion', $data, 'id='.$this->getId());
+			$db->update('promotion', $data, 'id=' . $this->getId());
 		}
 
 		Denkmal_Cache::clean();

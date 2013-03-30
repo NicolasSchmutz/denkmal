@@ -4,6 +4,6 @@
  * Custom exception
  *
  */
-class Denkmal_Exception extends Exception
-{
+class Denkmal_Exception extends Exception {
+
 }

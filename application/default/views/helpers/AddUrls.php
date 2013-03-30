@@ -2,25 +2,24 @@
 
 require_once 'List/Urls.php';
 
-
 /**
  * View-Helper to add url-links to a text
  *
  */
-class Zend_View_Helper_AddUrls extends Zend_Controller_Action_Helper_Abstract
-{
+class Zend_View_Helper_AddUrls extends Zend_Controller_Action_Helper_Abstract {
+
 	private static $_urls = null;
 
 	/**
 	 * Return the input-string with added links to urls
 	 *
-	 * @param string $str Input string
+	 * @param string $str     Input string
 	 * @param string $cacheId OPTIONAL Cache-id
 	 * @return string String with added links
 	 */
 	public function addUrls($str, $cacheId = null) {
 		if (isset($cacheId)) {
-			$cacheId = 'str_'.$cacheId;
+			$cacheId = 'str_' . $cacheId;
 		}
 		if (!isset($cacheId) || false === ($strResult = Denkmal_Cache::load($cacheId))) {
 			$strResult = $str;
@@ -41,5 +40,4 @@ class Zend_View_Helper_AddUrls extends Zend_Controller_Action_Helper_Abstract
 		}
 		return $strResult;
 	}
-
 }

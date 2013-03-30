@@ -3,16 +3,14 @@
 require_once 'List/Abstract.php';
 require_once 'Audio.php';
 
-
 /**
  * List_Audios Model
  *
  */
-class List_Audios extends List_Abstract
-{
-	const TYPE_ALL = self::TYPE_DEFAULT;
-	const TYPE_SUGGESTIONS = 2;				// Suggestions for an event
+class List_Audios extends List_Abstract {
 
+	const TYPE_ALL = self::TYPE_DEFAULT;
+	const TYPE_SUGGESTIONS = 2; // Suggestions for an event
 
 	/**
 	 * Load audios
@@ -27,7 +25,7 @@ class List_Audios extends List_Abstract
 				$this->_items = $this->_getTypeSuggestions($this->_filter);
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid audios-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid audios-list type (' . $this->_type . ')');
 				break;
 		}
 	}
@@ -52,7 +50,6 @@ class List_Audios extends List_Abstract
 		return $items;
 	}
 
-
 	/**
 	 * Return audios suggested for an event
 	 *
@@ -71,7 +68,7 @@ class List_Audios extends List_Abstract
 		foreach ($allAudios->get() as $audio) {
 			foreach ($words as $word) {
 				$word = Audio::toFilename($word);
-				if (stripos($audio,$word) !== false) {
+				if (stripos($audio, $word) !== false) {
 					$items[] = $audio;
 					break;
 				}
@@ -82,5 +79,4 @@ class List_Audios extends List_Abstract
 
 		return $items;
 	}
-
 }

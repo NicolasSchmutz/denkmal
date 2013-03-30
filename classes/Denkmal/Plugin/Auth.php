@@ -7,22 +7,20 @@
  *
  * This plugin checks whether the current user (by session) is authenticated.
  */
-class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract
-{
+class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract {
+
 	private $_auth;
 
 	// Route for un-authenticated users
-	private $_login = array('module' => 'admin',
+	private $_login = array('module'     => 'admin',
 							'controller' => 'auth',
-							'action' => 'login');
-
+							'action'     => 'login');
 
 	/**
 	 * Constructor. Sets the Zend_Auth
 	 *
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->_auth = Zend_Auth::getInstance();
 	}
 
@@ -31,8 +29,7 @@ class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 	 *
 	 * @param Zend_Controller_Request_Abstract $request Current request
 	 */
-	public function preDispatch(Zend_Controller_Request_Abstract $request)
-	{
+	public function preDispatch(Zend_Controller_Request_Abstract $request) {
 		$role = 'guest';
 
 		// Get the current users role
@@ -68,5 +65,4 @@ class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 			$request->setActionName($action);
 		}
 	}
-
 }

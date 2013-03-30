@@ -6,8 +6,7 @@
  * Abstract class for lists
  *
  */
-abstract class List_Abstract  implements Iterator
-{
+abstract class List_Abstract implements Iterator {
 
 	/**
 	 * Ihe itemlist of this list.
@@ -21,11 +20,10 @@ abstract class List_Abstract  implements Iterator
 
 	const TYPE_DEFAULT = 1;
 
-
 	/**
 	 * Constructor. Set up the list
 	 *
-	 * @param int $type OPTIONAL Request-type
+	 * @param int   $type   OPTIONAL Request-type
 	 * @param mixed $filter OPTIONAL Filter results
 	 */
 	function __construct($type = self::TYPE_DEFAULT, $filter = null) {
@@ -39,7 +37,6 @@ abstract class List_Abstract  implements Iterator
 	 *
 	 */
 	abstract protected function _load();
-
 
 	/**
 	 * Return the items
@@ -58,7 +55,6 @@ abstract class List_Abstract  implements Iterator
 	function num() {
 		return count($this->get());
 	}
-
 
 	/**
 	 * Iterator-function "rewind"
@@ -97,5 +93,4 @@ abstract class List_Abstract  implements Iterator
 	function valid() {
 		return isset($this->_items[$this->_position]);
 	}
-
 }

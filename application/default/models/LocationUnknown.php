@@ -5,8 +5,8 @@
  * Unknown Location (name)
  *
  */
-class LocationUnknown
-{
+class LocationUnknown {
+
 	private $_data = array();
 
 	function __construct($id = null) {
@@ -29,7 +29,7 @@ class LocationUnknown
 		$this->_data = $db->fetchRow($sql, $id);
 
 		if (!$this->_data) {
-			throw new Denkmal_Exception("LocationUnknown doesn't exist (" .$id.")");
+			throw new Denkmal_Exception("LocationUnknown doesn't exist (" . $id . ")");
 		}
 	}
 
@@ -80,5 +80,4 @@ class LocationUnknown
   					ON DUPLICATE KEY UPDATE hits=hits+1', array($locationName));
 		Denkmal_Cache::remove('list_locationunknowns_all');
 	}
-
 }

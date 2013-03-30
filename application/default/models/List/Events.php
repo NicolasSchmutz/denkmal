@@ -4,20 +4,18 @@ require_once 'List/Abstract.php';
 require_once 'Event.php';
 require_once 'Day.php';
 
-
 /**
  * List_Events Model
  *
  */
-class List_Events extends List_Abstract
-{
+class List_Events extends List_Abstract {
+
 	const TYPE_DAY = self::TYPE_DEFAULT;
 	const TYPE_DAY_BLOCKED = 2;
 	const TYPE_SEARCH = 3;
 	const TYPE_LOCATION = 4;
-	const TYPE_LOCATION_ALL = 5;	// Also blocked and disabled
+	const TYPE_LOCATION_ALL = 5; // Also blocked and disabled
 	const TYPE_DISABLED = 6;
-
 
 	/**
 	 * Load events
@@ -44,7 +42,7 @@ class List_Events extends List_Abstract
 				$this->_items = $this->_getTypeDisabled();
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid events-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid events-list type (' . $this->_type . ')');
 				break;
 		}
 	}
@@ -56,7 +54,7 @@ class List_Events extends List_Abstract
 	 * @return array Events
 	 */
 	private function _getTypeDay($day) {
-		$cacheId = 'list_events_day_'.$day->getDate()->toString('y_MM_dd');
+		$cacheId = 'list_events_day_' . $day->getDate()->toString('y_MM_dd');
 		$sql = 'SELECT e.id
 				FROM event e, location l
 				WHERE e.locationId = l.id
@@ -67,8 +65,8 @@ class List_Events extends List_Abstract
 				ORDER BY e.star DESC, l.id';
 		$morninghour = Zend_Registry::get('config')->morninghour;
 		$date = clone($day->getDate());
-		$args = array(	$date->addHour($morninghour)->toString('y-MM-dd HH:mm:ss'),
-						$date->addDay(1)->toString('y-MM-dd HH:mm:ss'));
+		$args = array($date->addHour($morninghour)->toString('y-MM-dd HH:mm:ss'),
+			$date->addDay(1)->toString('y-MM-dd HH:mm:ss'));
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
 			$ids = Denkmal_Db::get()->fetchCol($sql, $args);
@@ -82,7 +80,6 @@ class List_Events extends List_Abstract
 		return $items;
 	}
 
-
 	/**
 	 * Return blocked events by day
 	 *
@@ -90,7 +87,7 @@ class List_Events extends List_Abstract
 	 * @return array Events
 	 */
 	private function _getTypeDayBlocked($day) {
-		$cacheId = 'list_events_day_blocked_'.$day->getDate()->toString('y_MM_dd');
+		$cacheId = 'list_events_day_blocked_' . $day->getDate()->toString('y_MM_dd');
 		$sql = 'SELECT e.id
 				FROM event e, location l
 				WHERE e.locationId = l.id
@@ -101,8 +98,8 @@ class List_Events extends List_Abstract
 				ORDER BY e.star DESC, l.id';
 		$morninghour = Zend_Registry::get('config')->morninghour;
 		$date = clone($day->getDate());
-		$args = array(	$date->addHour($morninghour)->toString('y-MM-dd HH:mm:ss'),
-						$date->addDay(1)->toString('y-MM-dd HH:mm:ss'));
+		$args = array($date->addHour($morninghour)->toString('y-MM-dd HH:mm:ss'),
+			$date->addDay(1)->toString('y-MM-dd HH:mm:ss'));
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
@@ -116,7 +113,6 @@ class List_Events extends List_Abstract
 
 		return $items;
 	}
-
 
 	/**
 	 * Return events by search
@@ -175,7 +171,6 @@ class List_Events extends List_Abstract
 		return $items;
 	}
 
-
 	/**
 	 * Return all upcoming events by location
 	 *
@@ -200,7 +195,6 @@ class List_Events extends List_Abstract
 		return $items;
 	}
 
-
 	/**
 	 * Return disabled upcoming events
 	 *
@@ -224,7 +218,6 @@ class List_Events extends List_Abstract
 		return $items;
 	}
 
-
 	/**
 	 * Return a FULLTEXT-query from a user-query string
 	 *
@@ -235,5 +228,4 @@ class List_Events extends List_Abstract
 		$q = preg_replace('#(\s|^)([^"-])#', ' +$2', $q);
 		return $q;
 	}
-
 }

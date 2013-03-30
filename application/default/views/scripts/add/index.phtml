@@ -1,76 +1,107 @@
 <h2>Event hinzufügen</h2>
 
-<table><tr><td id="top" colspan="2">
-	<p>Formular für kommende Events in der Region Basel. Einträge werden <em>geprüft</em> (~1Tag).</p>
-	<?php
-		if (sizeof($this->errors) > 0) {
-			echo '<div class="error"><b>Bitte überprüfen Sie Ihre Eingaben:</b><br>';
-			foreach ($this->errors as $error) {
-				echo $error . '<br/>';
-			}
-			echo '</div>';
-		}
-	?>
-</td></tr><tr><td id="left">
-
-	<form method="post" name="add" id="add">
-		<div class="frame">
-			<h3>Wo:</h3>
-			Eine Location aus der Liste wählen:<br>
-			<label>Location:</label>
-			<select name="location_id" id="location" class="forPreview">
-				<option>-</option>
-				<?php
-				foreach ($this->locations as $location) {
-					echo '<option class="' .$location->getUrl(). '" value="' .$location->getId(). '"';
-					if ($this->locationId == $location->getId()) echo ' selected="selected"';
-					echo '>' .$location->getName(). '</option>';
+<table>
+	<tr>
+		<td id="top" colspan="2">
+			<p>Formular für kommende Events in der Region Basel. Einträge werden <em>geprüft</em> (~1Tag).</p>
+			<?php
+			if (sizeof($this->errors) > 0) {
+				echo '<div class="error"><b>Bitte überprüfen Sie Ihre Eingaben:</b><br>';
+				foreach ($this->errors as $error) {
+					echo $error . '<br/>';
 				}
-				?>
-			</select>
-			<span id="location_website_info"></span><br>
-		
-			<div id="location_new"<?php if ($this->locationId) echo ' style="display:none;"' ?>>
-				<hr><u>Oder</u>: Eine noch nicht gespeicherte Location angeben:<br>
-				<label>Name:</label> <input type="text" name="location_name" id="location_name" class="forPreview" value="<?php echo $this->locationName ?>"> <span class="example">(zB: "Capri Bar")</span> <br>
-				<label>Ort:</label> <input type="text" name="location_place" id="location_place" value="<?php echo $this->locationPlace ?>"> <span class="example">(zB: "Klybeckstrasse 240b" oder "Beim Florabeach")</span> <br>
-				<label>Webseite:</label> <input type="text" name="location_url" id="location_url" class="forPreview" value="<?php echo $this->locationUrl ?>"> <span class="example">(zB: "http://www.example.com/" oder leer)</span> <br>
-			</div>
-		</div>
-		
-		<div class="frame">
-			<h3>Wann:</h3>
-			<label>Datum:</label> <input type="text" name="from_date" id="from_date" class="forPreview" value="<?php echo $this->fromDate; ?>"> <span class="example">(zB: "17.7.<?php echo $this->now->get('y') ?>")</span> <br>
-			<label>Zeit:</label> <input type="text" name="from_time" id="from_time" class="forPreview" value="<?php echo $this->fromTime; ?>"> <span class="example">(zB: "22:00")</span> <br>
-			<label>Ende (optional):</label> <input type="text" name="until_time" id="until_time" class="forPreview" value="<?php echo $this->untilTime; ?>"> <span class="example">(zB: "3:00")</span> <br>
-		</div>
-		
-		<div class="frame what">
-			<h3>Was:</h3>
-			<label>Titel:</label> <input name="description[title]" value="<?php echo $this->description['title']; ?>" class="forPreview" /> <span class="example">(zB: "Meet the Rich vol.8")</span> <br>
-			<label>Künstler:</label> <input name="description[artists]" value="<?php echo $this->description['artists']; ?>" class="forPreview" /> <span class="example">(zB: "Gregor Rellemer, The Savvy Ones, DJ John")</span> <br>
-			<label>Genres:</label> <input name="description[genres]" value="<?php echo $this->description['genres']; ?>" class="forPreview" /> <span class="example">(zB: "Metal, Blues, Glam")</span> <br>
-			
-			<label>Webseiten:</label> <textarea name="description[links]" rows="3" cols="40"><?php echo $this->description['links']; ?></textarea><br>
-				<div style="padding-left:130px;"><span class="example">(Webseiten von Bands, DJs oder Festivals zum Event.<br/>Diese Links werden gespeichert, müssen nur das erste Mal eingegeben werden.)</span></div>
-		</div>
-		
-		<div class="frame">
-			<h3>Vorschau:</h3>
-			<div id="preview">
-				<ul class="events"><li class="a"></li></ul>
-				<div class="notice"></div>
-			</div>
-		</div>
-	
-		<div id="submit_cont">
-			<input id="submit" type="submit" value="Abschicken »" class="button" />
-		</div>
-	</form>
+				echo '</div>';
+			}
+			?>
+		</td>
+	</tr>
+	<tr>
+		<td id="left">
 
-</td><td id="right" class="noprint">
-	<div id="events">
-		<h3>Kommende Events:</h3>
-		<div id="events_cont"></div>
-	</div>
-</td></tr></table>
+			<form method="post" name="add" id="add">
+				<div class="frame">
+					<h3>Wo:</h3>
+					Eine Location aus der Liste wählen:<br>
+					<label>Location:</label>
+					<select name="location_id" id="location" class="forPreview">
+						<option>-</option>
+						<?php
+						foreach ($this->locations as $location) {
+							echo '<option class="' . $location->getUrl() . '" value="' . $location->getId() . '"';
+							if ($this->locationId == $location->getId()) {
+								echo ' selected="selected"';
+							}
+							echo '>' . $location->getName() . '</option>';
+						}
+						?>
+					</select>
+					<span id="location_website_info"></span><br>
+
+					<div id="location_new"<?php if ($this->locationId) {
+						echo ' style="display:none;"'
+} ?>>
+						<hr>
+						<u>Oder</u>: Eine noch nicht gespeicherte Location angeben:<br>
+						<label>Name:</label>
+						<input type="text" name="location_name" id="location_name" class="forPreview" value="<?php echo $this->locationName ?>">
+						<span class="example">(zB: "Capri Bar")</span> <br>
+						<label>Ort:</label> <input type="text" name="location_place" id="location_place" value="<?php echo $this->locationPlace ?>">
+						<span class="example">(zB: "Klybeckstrasse 240b" oder "Beim Florabeach")</span> <br>
+						<label>Webseite:</label>
+						<input type="text" name="location_url" id="location_url" class="forPreview" value="<?php echo $this->locationUrl ?>">
+						<span class="example">(zB: "http://www.example.com/" oder leer)</span> <br>
+					</div>
+				</div>
+
+				<div class="frame">
+					<h3>Wann:</h3>
+					<label>Datum:</label>
+					<input type="text" name="from_date" id="from_date" class="forPreview" value="<?php echo $this->fromDate; ?>">
+					<span class="example">(zB: "17.7.<?php echo $this->now->get('y') ?>")</span> <br>
+					<label>Zeit:</label> <input type="text" name="from_time" id="from_time" class="forPreview" value="<?php echo $this->fromTime; ?>">
+					<span class="example">(zB: "22:00")</span> <br>
+					<label>Ende (optional):</label>
+					<input type="text" name="until_time" id="until_time" class="forPreview" value="<?php echo $this->untilTime; ?>">
+					<span class="example">(zB: "3:00")</span> <br>
+				</div>
+
+				<div class="frame what">
+					<h3>Was:</h3>
+					<label>Titel:</label> <input name="description[title]" value="<?php echo $this->description['title']; ?>" class="forPreview" />
+					<span class="example">(zB: "Meet the Rich vol.8")</span> <br>
+					<label>Künstler:</label>
+					<input name="description[artists]" value="<?php echo $this->description['artists']; ?>" class="forPreview" />
+					<span class="example">(zB: "Gregor Rellemer, The Savvy Ones, DJ John")</span> <br>
+					<label>Genres:</label> <input name="description[genres]" value="<?php echo $this->description['genres']; ?>" class="forPreview" />
+					<span class="example">(zB: "Metal, Blues, Glam")</span> <br>
+
+					<label>Webseiten:</label>
+					<textarea name="description[links]" rows="3" cols="40"><?php echo $this->description['links']; ?></textarea><br>
+					<div style="padding-left:130px;"><span class="example">(Webseiten von Bands, DJs oder Festivals zum Event.<br />Diese Links werden gespeichert, müssen nur das erste Mal eingegeben werden.)</span>
+					</div>
+				</div>
+
+				<div class="frame">
+					<h3>Vorschau:</h3>
+					<div id="preview">
+						<ul class="events">
+							<li class="a"></li>
+						</ul>
+						<div class="notice"></div>
+					</div>
+				</div>
+
+				<div id="submit_cont">
+					<input id="submit" type="submit" value="Abschicken »" class="button" />
+				</div>
+			</form>
+
+		</td>
+		<td id="right" class="noprint">
+			<div id="events">
+				<h3>Kommende Events:</h3>
+				<div id="events_cont"></div>
+			</div>
+		</td>
+	</tr>
+</table>

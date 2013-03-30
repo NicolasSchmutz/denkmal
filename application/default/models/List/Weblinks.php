@@ -3,15 +3,13 @@
 require_once 'List/Abstract.php';
 require_once 'Weblink.php';
 
-
 /**
  * List_Locations Model
  *
  */
-class List_Weblinks extends List_Abstract
-{
-	const TYPE_ALL = self::TYPE_DEFAULT;
+class List_Weblinks extends List_Abstract {
 
+	const TYPE_ALL = self::TYPE_DEFAULT;
 
 	/**
 	 * Load events
@@ -23,7 +21,7 @@ class List_Weblinks extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid weblinks-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid weblinks-list type (' . $this->_type . ')');
 				break;
 		}
 	}
@@ -51,5 +49,4 @@ class List_Weblinks extends List_Abstract
 
 		return $items;
 	}
-
 }

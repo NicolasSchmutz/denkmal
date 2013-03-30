@@ -1,6 +1,6 @@
 <?php echo $this->partial('utils/nav.phtml', array('active' => 'locations')); ?>
 
 
-<h2><?php echo $this->location->getName(); ?></h2>
+	<h2><?php echo $this->location->getName(); ?></h2>
 
 <?php echo $this->partial('utils/list/events.phtml', array('events' => $this->events, 'showDate' => true)) ?>

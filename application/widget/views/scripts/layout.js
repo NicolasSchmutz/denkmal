@@ -1,11 +1,12 @@
 var Denkmal = {
 	html: '<?php echo $this->html ?>',
-	
+
 	loadJs: function(file, callback) {
-		callback = callback || function() {};
+		callback = callback || function() {
+		};
 		var script = document.createElement('script');
 		script.type = 'text/javascript';
-		
+
 		if (script.readyState) {
 			script.onreadystatechange = function() {
 				if (script.readyState == 'loaded' || script.readyState == 'complete') {
@@ -16,7 +17,7 @@ var Denkmal = {
 		} else {
 			script.onload = callback;
 		}
-		
+
 		script.src = file;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	},
@@ -35,18 +36,20 @@ var Denkmal = {
 		Denkmal.widget.addFilesData(<?php echo $this->jsonData($this->audiosData); ?>);
 		Denkmal.widget.setHtml(<?php echo json_encode($this->layout()->content) ?>);
 		Denkmal.widget.init();
-	}
-};
+		}
+		};
 
-Denkmal.loadCss('http://<?php echo $this->domain ?>/css/widget.css');
+		Denkmal.loadCss('http://<?php echo $this->domain ?>/css/widget.css');
 
-Denkmal.loadJs('http://<?php echo $this->domain ?>/js/jquery.js', function() {
-Denkmal.loadJs('http://<?php echo $this->domain ?>/js/jquery.tooltip.js', function() {
-Denkmal.loadJs('http://<?php echo $this->domain ?>/js/widget.js', function() {
-	jQuery.noConflict();
-	Denkmal.init();
-});
-});
-});
+		Denkmal.loadJs('http://<?php echo $this->domain ?>/js/jquery.js', function() {
+			Denkmal.loadJs('http://<?php echo $this->domain ?>/js/jquery.tooltip.js', function() {
+				Denkmal.loadJs('http://<?php echo $this->domain ?>/js/widget.js', function() {
+					jQuery.noConflict();
+					Denkmal.init();
+				});
+		});
+		});
 
-document.write('<div id="denkmal_widget"></div>');
+		document.write('
+			<div id="denkmal_widget"></div>
+		');

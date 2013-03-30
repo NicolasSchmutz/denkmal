@@ -6,13 +6,15 @@
  * Date-class used by grabber
  *
  */
-class Grabber_Date
-{
+class Grabber_Date {
+
 	private static $_months = array(
-		'Jan'=>1, 'Feb'=>2, 'Mar'=>3, 'Apr'=>4, 'Mai'=>5, 'Jun'=>6, 'Jul'=>7, 'Aug'=>8, 'Sep'=>9, 'Okt'=>10, 'Nov'=>11, 'Dez'=>12,
-		'Januar'=>1, 'Februar'=>2, 'März'=>3, 'April'=>4, 'Mai'=>5, 'Juni'=>6, 'Juli'=>7, 'August'=>8, 'September'=>9, 'Oktober'=>10, 'November'=>11, 'Dezember'=>12,
-		'Sept'=>9,
-		);
+		'Jan'     => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'Mai' => 5, 'Jun' => 6, 'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Okt' => 10, 'Nov' => 11,
+		'Dez'     => 12,
+		'Januar'  => 1, 'Februar' => 2, 'März' => 3, 'April' => 4, 'Mai' => 5, 'Juni' => 6, 'Juli' => 7, 'August' => 8, 'September' => 9,
+		'Oktober' => 10, 'November' => 11, 'Dezember' => 12,
+		'Sept'    => 9,
+	);
 	private static $_now = null;
 
 	/**
@@ -20,13 +22,12 @@ class Grabber_Date
 	 */
 	private $_date = null;
 
-
 	/**
 	 * Set up an upcoming date
 	 *
-	 * @param mixed $day Day of month (1..31) OR a Zend_Date
+	 * @param mixed $day   Day of month (1..31) OR a Zend_Date
 	 * @param mixed $month OPTIONAL Month (1..12 / "Jan", "Feb", ...)
-	 * @param int $year OPTIONAL Year
+	 * @param int   $year  OPTIONAL Year
 	 * @throws Denkmal_Exception on invalid/strange values
 	 */
 	function __construct($day, $month = null, $year = null) {
@@ -38,17 +39,17 @@ class Grabber_Date
 			$this->_date = new Zend_Date();
 
 			if ($day >= 1 && $day <= 31) {
-				$day = (int)$day;
+				$day = (int) $day;
 			} else {
-				throw new Denkmal_Exception('Unknown day (' .$day. ')');
+				throw new Denkmal_Exception('Unknown day (' . $day . ')');
 			}
 
 			if ($month >= 1 && $month <= 12) {
-				$month = (int)$month;
+				$month = (int) $month;
 			} elseif (array_key_exists($month, self::$_months)) {
 				$month = self::$_months[$month];
 			} else {
-				throw new Denkmal_Exception('Unknown month (' .$month. ')');
+				throw new Denkmal_Exception('Unknown month (' . $month . ')');
 			}
 
 			$yearNow = $this->_getNow()->get('y');
@@ -57,10 +58,10 @@ class Grabber_Date
 				if (strlen($year) == 2) {
 					$year = substr($yearNow, 0, 2) . $year;
 				}
-				if ($year >= $yearNow-1 && $year <= $yearNow+2) {
-					$year = (int)$year;
+				if ($year >= $yearNow - 1 && $year <= $yearNow + 2) {
+					$year = (int) $year;
 				} else {
-					throw new Denkmal_Exception('Unknown year (' .$year. ')');
+					throw new Denkmal_Exception('Unknown year (' . $year . ')');
 				}
 			} else {
 				$year = $yearNow;
@@ -95,13 +96,12 @@ class Grabber_Date
 			$this->_date->addDay(1);
 		}
 		if (isset($hours) && $hours >= 0 && $hours <= 24) {
-			$this->_date->setHour((int)$hours);
+			$this->_date->setHour((int) $hours);
 		}
 		if (isset($minutes) && $minutes >= 0 && $minutes <= 60) {
-			$this->_date->setMinute((int)$minutes);
+			$this->_date->setMinute((int) $minutes);
 		}
 	}
-
 
 	/**
 	 * Return date
@@ -140,5 +140,4 @@ class Grabber_Date
 	public function __toString() {
 		return $this->_date->toString();
 	}
-
 }

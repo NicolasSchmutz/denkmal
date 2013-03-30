@@ -2,13 +2,12 @@
 
 require_once 'Position.php';
 
-
 /**
  * Location
  *
  */
-class Location
-{
+class Location {
+
 	private $_data = array();
 
 	function __construct($id = null) {
@@ -31,7 +30,7 @@ class Location
 		$this->_data = $db->fetchRow($sql, $id);
 
 		if (!$this->_data) {
-			throw new Denkmal_Exception("Location doesn't exist (" .$id.")");
+			throw new Denkmal_Exception("Location doesn't exist (" . $id . ")");
 		}
 	}
 
@@ -131,7 +130,6 @@ class Location
 		return false;
 	}
 
-
 	/**
 	 * Return events for this location
 	 *
@@ -165,7 +163,7 @@ class Location
 								FROM event e
 								WHERE e.locationId=?
 									AND e.from >= ?'
-								, array($this->getId(), $nowStr));
+			, array($this->getId(), $nowStr));
 	}
 
 	/**
@@ -187,14 +185,13 @@ class Location
 								WHERE e.locationId=?
 									AND e.from > ?
 									AND e.from <= ?'
-								, array($this->getId(), $fromStart->toString('y-MM-dd HH:mm:ss'), $fromEnd->toString('y-MM-dd HH:mm:ss')));
+			, array($this->getId(), $fromStart->toString('y-MM-dd HH:mm:ss'), $fromEnd->toString('y-MM-dd HH:mm:ss')));
 		if ($id) {
 			require_once 'Event.php';
 			return new Event($id);
 		}
 		return null;
 	}
-
 
 	/**
 	 * Return location-aliases
@@ -206,7 +203,6 @@ class Location
 		$aliases = new List_LocationAliases(List_LocationAliases::TYPE_LOCATION, $this);
 		return $aliases;
 	}
-
 
 	/**
 	 * Set the location's name
@@ -239,7 +235,6 @@ class Location
 		return true;
 	}
 
-
 	/**
 	 * Set the location's notes
 	 *
@@ -250,7 +245,6 @@ class Location
 		$this->_data['notes'] = $notes;
 		return true;
 	}
-
 
 	/**
 	 * Save/create this location
@@ -266,12 +260,11 @@ class Location
 			$this->_load($db->lastInsertId('location'));
 		} else {
 			// Update location
-			$db->update('location', $data, 'id='.$this->getId());
+			$db->update('location', $data, 'id=' . $this->getId());
 		}
 
 		Denkmal_Cache::clean();
 	}
-
 
 	/**
 	 * Return a location by its name (resolves aliases)

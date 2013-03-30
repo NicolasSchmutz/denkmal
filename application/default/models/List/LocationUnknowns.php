@@ -3,15 +3,13 @@
 require_once 'List/Abstract.php';
 require_once 'LocationUnknown.php';
 
-
 /**
  * List_LocationsUnknowns Model
  *
  */
-class List_LocationUnknowns extends List_Abstract
-{
-	const TYPE_ALL = self::TYPE_DEFAULT;
+class List_LocationUnknowns extends List_Abstract {
 
+	const TYPE_ALL = self::TYPE_DEFAULT;
 
 	/**
 	 * Load events
@@ -23,11 +21,10 @@ class List_LocationUnknowns extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid unknwon-locations-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid unknwon-locations-list type (' . $this->_type . ')');
 				break;
 		}
 	}
-
 
 	/**
 	 * Return all unknown locations
@@ -52,5 +49,4 @@ class List_LocationUnknowns extends List_Abstract
 
 		return $items;
 	}
-
 }

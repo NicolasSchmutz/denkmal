@@ -6,17 +6,15 @@
  * Database connection
  *
  */
-class Denkmal_Db
-{
+class Denkmal_Db {
 
 	private static $_db;
 
-
 	/**
-	* Creates the db-connection if it doesn't already exist and returns it.
-	*
-	* @return Zend_Db_Adapter_Abstract The created or current database-adapter
-	*/
+	 * Creates the db-connection if it doesn't already exist and returns it.
+	 *
+	 * @return Zend_Db_Adapter_Abstract The created or current database-adapter
+	 */
 	public static function get() {
 		if (!isset(self::$_db)) {
 			self::_setUp();
@@ -24,19 +22,18 @@ class Denkmal_Db
 		return self::$_db;
 	}
 
-
 	/**
-	* Connect to the database and return the created adapter
-	*
-	* @return Zend_Db_Adapter_Abstract The created database-adapter
-	* @throws Exception If connecting is impossible
-	*/
+	 * Connect to the database and return the created adapter
+	 *
+	 * @return Zend_Db_Adapter_Abstract The created database-adapter
+	 * @throws Exception If connecting is impossible
+	 */
 	private static function _setUp() {
 		$config = Zend_Registry::get('config');
 		if (isset(self::$_db)) {
 			try {
 				self::$_db->closeConnection();
-			} catch(Zend_Exception $e) {
+			} catch (Zend_Exception $e) {
 				// Could not close current db-connection, ignore that..
 			}
 		}
@@ -47,12 +44,11 @@ class Denkmal_Db
 			$db->query('SET NAMES "utf8"');
 		} catch (Zend_Exception $e) {
 			require_once 'Exception.php';
-			throw new Denkmal_Exception('DB Error: '. $e);
+			throw new Denkmal_Exception('DB Error: ' . $e);
 		}
 		self::$_db = $db;
 		return $db;
 	}
-
 
 	/**
 	 * Return the given value OR a Db-Expr(NULL), if $value===null
@@ -67,5 +63,4 @@ class Denkmal_Db
 			return $value;
 		}
 	}
-
 }

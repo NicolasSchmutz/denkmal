@@ -3,18 +3,16 @@
 require_once 'List/Abstract.php';
 require_once 'Location.php';
 
-
 /**
  * List_Locations Model
  *
  */
-class List_Locations extends List_Abstract
-{
-	const TYPE_ENABLED = self::TYPE_DEFAULT;	// blocked=0, enabled=1
-	const TYPE_VALID = 2;						// blocked=0
-	const TYPE_DISABLED = 3;					// enabled=0
-	const TYPE_ALL = 4;							//
+class List_Locations extends List_Abstract {
 
+	const TYPE_ENABLED = self::TYPE_DEFAULT; // blocked=0, enabled=1
+	const TYPE_VALID = 2; // blocked=0
+	const TYPE_DISABLED = 3; // enabled=0
+	const TYPE_ALL = 4; //
 
 	/**
 	 * Load events
@@ -35,7 +33,7 @@ class List_Locations extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid locations-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid locations-list type (' . $this->_type . ')');
 				break;
 		}
 	}
@@ -47,8 +45,8 @@ class List_Locations extends List_Abstract
 	 * @return array Locations
 	 */
 	private function _getTypeEnabled($enabled = true) {
-		$enabled = (int)(bool)$enabled;
-		$cacheId = 'list_locations_enabled_'.$enabled;
+		$enabled = (int) (bool) $enabled;
+		$cacheId = 'list_locations_enabled_' . $enabled;
 		$sql = 'SELECT l.id
 				FROM location l
 				WHERE l.enabled=?
@@ -94,7 +92,6 @@ class List_Locations extends List_Abstract
 		return $items;
 	}
 
-
 	/**
 	 * Return all locations
 	 *
@@ -118,5 +115,4 @@ class List_Locations extends List_Abstract
 
 		return $items;
 	}
-
 }

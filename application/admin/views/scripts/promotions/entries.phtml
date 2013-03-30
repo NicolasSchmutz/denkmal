@@ -1,5 +1,5 @@
 <?php echo $this->partial('utils/nav.phtml', array('active' => 'promotions')); ?>
 
-<h2><?php echo strip_tags($this->promotion->getText()); ?></h2>
+	<h2><?php echo strip_tags($this->promotion->getText()); ?></h2>
 
 <?php echo $this->partial('utils/list/promotionentries.phtml', array('promotionentries' => $this->promotion->getEntries())) ?>

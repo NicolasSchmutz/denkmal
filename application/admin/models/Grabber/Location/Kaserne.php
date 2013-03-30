@@ -7,6 +7,7 @@ require_once 'Grabber/Location.php';
  *
  */
 class Grabber_Location_Kaserne extends Grabber_Location {
+
 	/**
 	 * Set up grabber
 	 */
@@ -32,7 +33,5 @@ class Grabber_Location_Kaserne extends Grabber_Location {
 				$this->_addEvent($description, $from);
 			}
 		}
-
 	}
-
 }

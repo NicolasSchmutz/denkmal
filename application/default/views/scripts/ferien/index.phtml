@@ -1,35 +1,40 @@
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="description" content="DENKMAL.ORG - Basels Eventkalender. WaslOift am Rheinknie und wie hört es sich an?" />
-	<meta name="keywords" content="denkmal, basel, bs, denkmal.org, eventkalender, events, party, parties, ausgang, kultur, wasloift" />
-	<?php echo $this->headTitle() ?>
-	<style>
-	body {
-		margin: 0;
-		background-color: #96DD6B;
-		font-family: "Trebuchet MS", Trebuchet, Helvetica, Arial, Verdana, sans-serif;
-	}
-	#tage {
-		position: absolute;
-		top: 175px;
-		left: 0px;
-		width: 460px;
-		font-size: 5em;
-		font-weight: 800;
-		text-align: center;
-	}
-	</style>
-	<?php echo $this->partial('utils/googleanalytics.phtml') ?>
-</head>
-<body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="description" content="DENKMAL.ORG - Basels Eventkalender. WaslOift am Rheinknie und wie hört es sich an?" />
+		<meta name="keywords" content="denkmal, basel, bs, denkmal.org, eventkalender, events, party, parties, ausgang, kultur, wasloift" />
+		<?php echo $this->headTitle() ?>
+		<style>
+			body {
+				margin: 0;
+				background-color: #96DD6B;
+				font-family: "Trebuchet MS", Trebuchet, Helvetica, Arial, Verdana, sans-serif;
+			}
 
-	<table width=100% height=100%><tr height=100%><td valign="middle" align="center" height=100%>
-		<div style="position: relative; width: 500px; height: 436px;">
-			<img src="/pics/loch.jpg" alt="Tage bis zum Alltag:" />
-			<div id='tage'><?php echo $this->days ?></div>
-		</div>
-	</td></tr></table>
+			#tage {
+				position: absolute;
+				top: 175px;
+				left: 0px;
+				width: 460px;
+				font-size: 5em;
+				font-weight: 800;
+				text-align: center;
+			}
+		</style>
+		<?php echo $this->partial('utils/googleanalytics.phtml') ?>
+	</head>
+	<body>
 
-</body>
+		<table width=100% height=100%>
+			<tr height=100%>
+				<td valign="middle" align="center" height=100%>
+					<div style="position: relative; width: 500px; height: 436px;">
+						<img src="/pics/loch.jpg" alt="Tage bis zum Alltag:" />
+						<div id='tage'><?php echo $this->days ?></div>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+	</body>
 </html>

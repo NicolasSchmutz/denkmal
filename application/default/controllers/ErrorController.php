@@ -6,13 +6,12 @@
  * Error controller
  *
  */
-class ErrorController extends Zend_Controller_Action
-{
+class ErrorController extends Zend_Controller_Action {
+
 	/**
 	 * Error page
 	 */
-	public function errorAction()
-	{
+	public function errorAction() {
 		$errors = $this->_getParam('error_handler');
 		$config = Zend_Registry::get('config');
 
@@ -30,9 +29,9 @@ class ErrorController extends Zend_Controller_Action
 					$this->view->msg = 'Application error (sorry)';
 				}
 				break;
-        }
+		}
 
-        $this->getResponse()->clearBody();
-        $this->view->headTitle('DENKMAL.ORG Eventkalender', Zend_View_Helper_Placeholder_Container_Abstract::SET);
+		$this->getResponse()->clearBody();
+		$this->view->headTitle('DENKMAL.ORG Eventkalender', Zend_View_Helper_Placeholder_Container_Abstract::SET);
 	}
 }

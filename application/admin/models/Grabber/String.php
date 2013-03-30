@@ -6,6 +6,7 @@
  *
  */
 class Grabber_String {
+
 	private $_string = null;
 
 	/**
@@ -177,5 +178,4 @@ class Grabber_String {
 	public function __toString() {
 		return $this->_string;
 	}
-
 }

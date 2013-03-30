@@ -3,13 +3,12 @@
 require_once 'Day.php';
 require_once 'Location.php';
 
-
 /**
  * Event
  *
  */
-class Event
-{
+class Event {
+
 	private $_data = array();
 
 	function __construct($id = null) {
@@ -33,7 +32,7 @@ class Event
 		$this->_data = $db->fetchRow($sql, $id);
 
 		if (!$this->_data) {
-			throw new Denkmal_Exception("Event doesn't exist (" .$id.")");
+			throw new Denkmal_Exception("Event doesn't exist (" . $id . ")");
 		}
 	}
 
@@ -97,7 +96,6 @@ class Event
 		return null;
 	}
 
-
 	/**
 	 * Return whether the event has a star
 	 *
@@ -158,7 +156,6 @@ class Event
 		return null;
 	}
 
-
 	/**
 	 * Return audio-suggestions for this event
 	 *
@@ -169,12 +166,11 @@ class Event
 		return new List_Audios(List_Audios::TYPE_SUGGESTIONS, $this);
 	}
 
-
 	/**
 	 * Set description
 	 *
-	 * @param string $description Description
-	 * @param boolean $lenghtLimit OPTIONAL Whether to shorten long descriptions (default: true)
+	 * @param string  $description  Description
+	 * @param boolean $lenghtLimit  OPTIONAL Whether to shorten long descriptions (default: true)
 	 * @param boolean $filterFormat OPTIONAL Whether to filter formatting in description (default: true)
 	 * @return boolean True on success
 	 */
@@ -200,7 +196,6 @@ class Event
 		$this->_data['description'] = $description;
 		return true;
 	}
-
 
 	/**
 	 * Set the from date/time
@@ -283,7 +278,6 @@ class Event
 		$this->_data['enabled'] = (int) (boolean) $enabled;
 	}
 
-
 	/**
 	 * Set audio
 	 *
@@ -293,23 +287,17 @@ class Event
 		$this->_data['audio'] = $audio;
 	}
 
-
-
-
-
-
 	/**
 	 * Remove this event
 	 */
 	public function remove() {
 		if ($this->getId()) {
 			$db = Denkmal_Db::get();
-			$db->delete('event', 'id='.$this->getId());
+			$db->delete('event', 'id=' . $this->getId());
 		}
 		$this->_data = array();
 		Denkmal_Cache::clean();
 	}
-
 
 	/**
 	 * Save/create this event
@@ -331,7 +319,7 @@ class Event
 			$this->_load($db->lastInsertId('event'));
 		} else {
 			// Update event
-			$db->update('event', $data, 'id='.$this->getId());
+			$db->update('event', $data, 'id=' . $this->getId());
 		}
 
 		Denkmal_Cache::clean();

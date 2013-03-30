@@ -2,18 +2,16 @@
 
 require_once 'List/Abstract.php';
 
-
 /**
  * List_Urls Model
  *
  */
-class List_Urls extends List_Abstract
-{
+class List_Urls extends List_Abstract {
+
 	const TYPE_ALL = self::TYPE_DEFAULT;
 
 	private $_regexpSearches = null;
 	private $_regexpReplaces = null;
-
 
 	/**
 	 * Load urls
@@ -25,7 +23,7 @@ class List_Urls extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid urls-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid urls-list type (' . $this->_type . ')');
 				break;
 		}
 	}
@@ -46,18 +44,16 @@ class List_Urls extends List_Abstract
 			$rows = Denkmal_Db::get()->fetchAll($sql);
 			$items = array();
 			foreach ($rows as $row) {
-				$items[$row['id']] = array(	'name' => $row['name'],
-											'url' => $row['url'],
-											'onlyifmarked' => ($row['onlyifmarked']==1)
-											);
+				$items[$row['id']] = array('name'         => $row['name'],
+										   'url'          => $row['url'],
+										   'onlyifmarked' => ($row['onlyifmarked'] == 1)
+				);
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
 
 		return $items;
 	}
-
-
 
 	/**
 	 * Fill search- and replace-arrays for this URL-list
@@ -70,15 +66,14 @@ class List_Urls extends List_Abstract
 
 			foreach ($this->get() as $url) {
 				if ($url['onlyifmarked']) {
-					$this->_regexpSearches[] = '#' .$wordBoundary. '\[(\Q' . $url['name'] . '\E)\]' .$wordBoundary. '#ui';
+					$this->_regexpSearches[] = '#' . $wordBoundary . '\[(\Q' . $url['name'] . '\E)\]' . $wordBoundary . '#ui';
 				} else {
-					$this->_regexpSearches[] = '#' .$wordBoundary. '(\Q' .$url['name']. '\E)' .$wordBoundary. '#ui';
+					$this->_regexpSearches[] = '#' . $wordBoundary . '(\Q' . $url['name'] . '\E)' . $wordBoundary . '#ui';
 				}
-				$this->_regexpReplaces[] = '$1<a href="' .$url['url']. '" class="url" target="_blank">' .$url['name']. '</a>$3';
+				$this->_regexpReplaces[] = '$1<a href="' . $url['url'] . '" class="url" target="_blank">' . $url['name'] . '</a>$3';
 			}
 		}
 	}
-
 
 	/**
 	 * Replace URL-names with URL-links in a string
@@ -108,6 +103,4 @@ class List_Urls extends List_Abstract
 		}
 		return $matches;
 	}
-
-
 }

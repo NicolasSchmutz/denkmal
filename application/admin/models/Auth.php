@@ -5,8 +5,7 @@
  * Login and Logout functions
  *
  */
-class Auth
-{
+class Auth {
 
 	/**
 	 * Login
@@ -17,34 +16,30 @@ class Auth
 	 * @return boolean True on success
 	 * @throws Denkmal_Exception On error
 	 */
-	public static function login($user, $pass)
-	{
+	public static function login($user, $pass) {
 		if (empty($user)) {
 			throw new Denkmal_Exception('Kein User angegeben');
 		}
 
 		if (false != ($authAdapter = self::checkLogin($user, $pass))) {
 			// Login successful - write data to session
-			$data = $authAdapter->getResultRowObject( array('user','role') );
+			$data = $authAdapter->getResultRowObject(array('user', 'role'));
 			Zend_Auth::getInstance()->getStorage()->write($data);
 
 			// Set cookie to remember session
-			Zend_Session::rememberMe(60*60*24*365*10);
+			Zend_Session::rememberMe(60 * 60 * 24 * 365 * 10);
 			return true;
 		}
 
 		throw new Denkmal_Exception('Login fehlgeschlagen');
 	}
 
-
-
 	/**
 	 * Logout
 	 *
 	 * Logs the current user out.
 	 */
-	public static function logout()
-	{
+	public static function logout() {
 		Zend_Auth::getInstance()->clearIdentity();
 		// Let session end when browser is closed
 		Zend_Session::forgetMe();
@@ -76,12 +71,10 @@ class Auth
 			if ($result->isValid()) {
 				return $authAdapter;
 			}
-		} catch(Exception $e) {
+		} catch (Exception $e) {
 			return false;
 		}
 
 		return false;
 	}
-
-
 }

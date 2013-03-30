@@ -7,26 +7,22 @@ require_once 'List/Locations.php';
 require_once 'List/LocationUnknowns.php';
 require_once 'List/Audios.php';
 
-
 /**
  * Index controller
  *
  * Admin page
  */
-class Admin_IndexController extends Zend_Controller_Action
-{
+class Admin_IndexController extends Zend_Controller_Action {
 
-	public function init()
-	{
+	public function init() {
 		$this->_helper->contextSwitch()
-			->addActionContext('audioall', 'json')
-			->addActionContext('description', 'json')
-			->initContext();
+				->addActionContext('audioall', 'json')
+				->addActionContext('description', 'json')
+				->initContext();
 
 		$this->view->addHelperPath('../application/default/views/helpers/');
 		$this->view->headTitle('DENKMAL.ORG Admin');
 	}
-
 
 	/**
 	 * Home/Events page
@@ -49,13 +45,11 @@ class Admin_IndexController extends Zend_Controller_Action
 		$this->view->day = $day;
 	}
 
-
-
 	/**
 	 * Edit event-description
 	 */
 	public function descriptionAction() {
-	if (!$this->_hasParam('id')) {
+		if (!$this->_hasParam('id')) {
 			throw new Denkmal_Exception('No event-id provided');
 		}
 
@@ -70,8 +64,6 @@ class Admin_IndexController extends Zend_Controller_Action
 		$this->_helper->layout->disableLayout();
 		$this->view->event = $event;
 	}
-
-
 
 	/**
 	 * Select suggested audio
@@ -141,6 +133,4 @@ class Admin_IndexController extends Zend_Controller_Action
 
 		$this->_helper->json->sendJson(array('state' => $state, 'reload' => $reload));
 	}
-
-
 }

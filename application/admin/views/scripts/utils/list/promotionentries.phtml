@@ -1,9 +1,11 @@
 <?php
 echo '<ul class="promotionentries">';
-$selected = rand(0,$this->promotionentries->num()-1);
+$selected = rand(0, $this->promotionentries->num() - 1);
 foreach ($this->promotionentries as $i => $promotionentry) {
 	echo '<li';
-	if ($i == $selected) { echo ' class="highlight"'; }
+	if ($i == $selected) {
+		echo ' class="highlight"';
+	}
 	echo '>';
 	echo $this->adminPromotionEntry($promotionentry);
 	echo '</li>';

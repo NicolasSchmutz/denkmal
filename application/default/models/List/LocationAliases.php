@@ -3,15 +3,13 @@
 require_once 'List/Abstract.php';
 require_once 'Location.php';
 
-
 /**
  * List_LocationAliases Model
  *
  */
-class List_LocationAliases extends List_Abstract
-{
-	const TYPE_LOCATION = self::TYPE_DEFAULT;
+class List_LocationAliases extends List_Abstract {
 
+	const TYPE_LOCATION = self::TYPE_DEFAULT;
 
 	/**
 	 * Load aliases
@@ -23,7 +21,7 @@ class List_LocationAliases extends List_Abstract
 				$this->_items = $this->_getTypeLocation($this->_filter);
 				break;
 			default:
-				throw new Denkmal_Exception('Invalid locationalias-list type (' .$this->_type. ')');
+				throw new Denkmal_Exception('Invalid locationalias-list type (' . $this->_type . ')');
 				break;
 		}
 	}
@@ -35,7 +33,7 @@ class List_LocationAliases extends List_Abstract
 	 * @return array String-array of aliases
 	 */
 	private function _getTypeLocation($location) {
-		$cacheId = 'list_locationaliases_location_'.$location->getId();
+		$cacheId = 'list_locationaliases_location_' . $location->getId();
 		$sql = 'SELECT a.name
 				FROM location_alias a
 				WHERE a.locationId = ?
@@ -50,5 +48,4 @@ class List_LocationAliases extends List_Abstract
 
 		return $items;
 	}
-
 }
