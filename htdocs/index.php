@@ -13,7 +13,6 @@ mb_internal_encoding('UTF-8');
 $path = array(
 	'../',
 	'../classes/',
-	'../config/',
 	'../application/default/models/',
 	'../application/default/views/helpers/',
 	'../application/admin/models/',
@@ -22,16 +21,9 @@ $path = array(
 );
 set_include_path(implode(PATH_SEPARATOR, $path));
 
-require_once '../vendor/autoload.php';
-require_once 'Zend/Controller/Front.php';
-require_once 'Zend/Controller/Action.php';
-require_once 'Zend/Controller/Router/Route/Static.php';
-require_once 'Zend/Controller/Router/Route/Regex.php';
-require_once 'Zend/Registry.php';
-require_once 'Zend/Layout.php';
-require_once 'Zend/Session.php';
+require_once 'vendor/autoload.php';
 
-require_once 'Config.php';
+require_once 'config/Config.php';
 $config = new Config();
 Zend_Registry::set('config', $config);
 
@@ -47,7 +39,6 @@ if ($config->debug) {
 Zend_Controller_Action_HelperBroker::addPrefix('Denkmal_Action_Helper');
 
 // Set doctype
-require_once 'Zend/View/Helper/Doctype.php';
 $doctypeHelper = new Zend_View_Helper_Doctype();
 $doctypeHelper->doctype('XHTML1_STRICT');
 
