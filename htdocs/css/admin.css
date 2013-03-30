@@ -1,9 +1,11 @@
 body {
 	font-size: 12px;
 }
+
 h2 {
 	margin-top: 20px;
 }
+
 a {
 	color: blue;
 	text-decoration: underline;
@@ -13,91 +15,100 @@ a {
 	min-width: 340px;
 }
 
-
 ul.nav li {
 	float: left;
 }
-	ul.nav li a {
-		display: block;
-	}
-	ul.nav li.active * {
-		font-weight: bold;
-	}
+
+ul.nav li a {
+	display: block;
+}
+
+ul.nav li.active * {
+	font-weight: bold;
+}
 
 ul#nav {
 	font-size: 14px;
 }
-	ul#nav li a {
-		padding: 0 10px 10px 10px;
-	}
-		
+
+ul#nav li a {
+	padding: 0 10px 10px 10px;
+}
 
 ul#days li a {
 	padding: 0 2px 0 2px;
 }
-		
-		
+
 ul.locations li .info {
 	float: left;
 	width: 80px;
 }
-	ul.locations li .info.blocked {
-		color: #888;
-	}
-	ul.locations li .name {
-		color: blue;
-	}
-	ul.locations li .notes {
-		font-style: italic;
-	}
+
+ul.locations li .info.blocked {
+	color: #888;
+}
+
+ul.locations li .name {
+	color: blue;
+}
+
+ul.locations li .notes {
+	font-style: italic;
+}
 
 ul.promotions li .info {
 	float: left;
 	width: 150px;
 }
-	ul.promotions li .info.empty {
-		color: #888;
-	}
-	
+
+ul.promotions li .info.empty {
+	color: #888;
+}
+
 ul.promotionentries li .info {
 	float: left;
 	width: 40px;
 }
-	ul.promotionentries li.highlight .name, ul.promotionentries li.highlight .email {
-		font-weight: bold;
-	}
+
+ul.promotionentries li.highlight .name, ul.promotionentries li.highlight .email {
+	font-weight: bold;
+}
 
 ul.urls {
 	margin-top: 20px;
 }
+
 ul.urls li .oim {
 	color: #aaa;
 }
-
 
 ul.events li {
 	text-indent: 0;
 	padding: 1px 0 1px 4px;
 	font-style: normal;
 }
-	ul.events li .date {
-		float: left;
-		width: 85px;
-	}
-	ul.events li .location {
-		color: blue;
-	}
-	ul.events li .description a {
-		color: #444444 !important;
-	}
-	ul.events li .description .editable {
-		display: inline;
-	}
-		ul.events li .description .editable input {
-			border: none;
-			background-color: #96dd6b;
-		}
 
+ul.events li .date {
+	float: left;
+	width: 85px;
+}
+
+ul.events li .location {
+	color: blue;
+}
+
+ul.events li .description a {
+	color: #444444 !important;
+}
+
+ul.events li .description .editable {
+	display: inline;
+}
+
+ul.events li .description .editable input {
+	border: none;
+	background-color: #96dd6b;
+}
 
 ul.events li .option {
 	float: left;
@@ -105,41 +116,53 @@ ul.events li .option {
 	width: 8px;
 	margin-right: 4px;
 	margin-top: 4px;
-	cursor:pointer; cursor:hand;
+	cursor: pointer;
+	cursor: hand;
 }
-	ul.events li .option.star {
-		background-image: url('/pics/dot_pin.png');
-	}
-		ul.events li.star .option.star {
-			background-image: url('/pics/dot_star_pin.png');
-		}
-	ul.events li .option.audio {
-		background-image: url('/pics/admin/audio_not.png');
-	}
-		ul.events li.audio .option.audio {
-			background-image: url('/pics/admin/audio.png');
-		}
-	ul.events li .option.locked {
-		background-image: url('/pics/admin/locked_not.png');
-	}
-		ul.events li.locked .option.locked {
-			background-image: url('/pics/admin/locked.png');
-		}
-	ul.events li .option.del {
-		background-image: url('/pics/admin/del.png');
-		width: 18px;
-	}
-	ul.events li .option.enabled {
-		background-image: url('/pics/admin/enabled_not.png');
-		width: 34px;
-	}
-		ul.events li.enabled .option.enabled {
-			background-image: url('/pics/admin/enabled.png');
-		}
-	ul.events li .option.blocked {
-		background-image: url('/pics/admin/blocked_not.png');
-		width: 37px;
-	}
-		ul.events li.blocked .option.blocked {
-			background-image: url('/pics/admin/blocked.png');
-		}
+
+ul.events li .option.star {
+	background-image: url('/pics/dot_pin.png');
+}
+
+ul.events li.star .option.star {
+	background-image: url('/pics/dot_star_pin.png');
+}
+
+ul.events li .option.audio {
+	background-image: url('/pics/admin/audio_not.png');
+}
+
+ul.events li.audio .option.audio {
+	background-image: url('/pics/admin/audio.png');
+}
+
+ul.events li .option.locked {
+	background-image: url('/pics/admin/locked_not.png');
+}
+
+ul.events li.locked .option.locked {
+	background-image: url('/pics/admin/locked.png');
+}
+
+ul.events li .option.del {
+	background-image: url('/pics/admin/del.png');
+	width: 18px;
+}
+
+ul.events li .option.enabled {
+	background-image: url('/pics/admin/enabled_not.png');
+	width: 34px;
+}
+
+ul.events li.enabled .option.enabled {
+	background-image: url('/pics/admin/enabled.png');
+}
+
+ul.events li .option.blocked {
+	background-image: url('/pics/admin/blocked_not.png');
+	width: 37px;
+}
+
+ul.events li.blocked .option.blocked {
+	background-image: url('/pics/admin/blocked.png');
+}

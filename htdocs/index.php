@@ -4,9 +4,9 @@
  * Bootstrap-Script
  */
 
-ini_set("display_errors","Off");
+ini_set("display_errors", "Off");
 
-error_reporting(E_ALL|E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 
 mb_internal_encoding('UTF-8');
 
@@ -16,10 +16,10 @@ $path = array(
 	'../config/',
 	'../application/default/models/',
 	'../application/default/views/helpers/',
- 	'../application/admin/models/',
+	'../application/admin/models/',
 	'../application/admin/views/helpers/',
 	get_include_path()
-	);
+);
 set_include_path(implode(PATH_SEPARATOR, $path));
 
 require_once '../vendor/autoload.php';
@@ -40,7 +40,7 @@ date_default_timezone_set('Europe/Zurich');
 
 // Set debug-mode if desired
 if ($config->debug) {
-	ini_set("display_errors","On");
+	ini_set("display_errors", "On");
 }
 
 // Include custom action-helpers
@@ -60,9 +60,9 @@ Zend_Session::start();
 // Get front-controller
 $frontController = Zend_Controller_Front::getInstance();
 $frontController->addModuleDirectory('../application/')
-	->registerPlugin(new Denkmal_Plugin_Context())
-	->registerPlugin(new Denkmal_Plugin_Auth())
-	->registerPlugin(new Denkmal_Plugin_Ferien());
+		->registerPlugin(new Denkmal_Plugin_Context())
+		->registerPlugin(new Denkmal_Plugin_Auth())
+		->registerPlugin(new Denkmal_Plugin_Ferien());
 
 // Router
 $router = $frontController->getRouter();
