@@ -1,16 +1,10 @@
 <?php
 
-/**
- * Bootstrap-Script
- */
-
 ini_set("display_errors", "Off");
-
 error_reporting(E_ALL | E_STRICT);
-
 mb_internal_encoding('UTF-8');
 
-$path = array(
+$includePaths = array(
 	'../',
 	'../classes/',
 	'../application/default/models/',
@@ -19,11 +13,11 @@ $path = array(
 	'../application/admin/views/helpers/',
 	get_include_path()
 );
-set_include_path(implode(PATH_SEPARATOR, $path));
+set_include_path(implode(PATH_SEPARATOR, $includePaths));
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
-require_once 'config/Config.php';
+require_once '../config/Config.php';
 $config = new Config();
 Zend_Registry::set('config', $config);
 
@@ -56,6 +50,7 @@ $frontController->addModuleDirectory('../application/')
 		->registerPlugin(new Denkmal_Plugin_Ferien());
 
 // Router
+/** @var $router Zend_Controller_Router_Rewrite */
 $router = $frontController->getRouter();
 $router->addRoute('index',
 	new Zend_Controller_Router_Route_Regex(
