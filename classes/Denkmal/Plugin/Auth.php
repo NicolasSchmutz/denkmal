@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Zend/Auth.php';
 
 
 /**
@@ -16,11 +15,11 @@ class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 	private $_login = array('module' => 'admin',
 							'controller' => 'auth',
 							'action' => 'login');
-	
+
 
 	/**
 	 * Constructor. Sets the Zend_Auth
-	 * 
+	 *
 	 */
 	public function __construct()
 	{
@@ -29,13 +28,13 @@ class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 
 	/**
 	 * Called by the Dispatcher. Checks access-rules based on ACL
-	 * 
+	 *
 	 * @param Zend_Controller_Request_Abstract $request Current request
 	 */
 	public function preDispatch(Zend_Controller_Request_Abstract $request)
 	{
 		$role = 'guest';
-		
+
 		// Get the current users role
 		if ($this->_auth->hasIdentity()) {
 			// User is authenticated
@@ -43,13 +42,13 @@ class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 				$role = $this->_auth->getIdentity()->role;
 			}
 		}
-		
+
 		// Key login
 		$loginKey = $this->getRequest()->getParam('loginkey');
 		if ($loginKey == Zend_Registry::get('config')->loginkey) {
 			$role = 'admin';
 		}
-		
+
 		// Get current route
 		$action = $request->action;
 		$controller = $request->controller;
@@ -61,7 +60,7 @@ class Denkmal_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 			$controller = $this->_login['controller'];
 			$action = $this->_login['action'];
 		}
-		
+
 		if ($module != $request->module || $controller != $request->controller || $action != $request->action) {
 			// Reroute user to new location
 			$request->setModuleName($module);

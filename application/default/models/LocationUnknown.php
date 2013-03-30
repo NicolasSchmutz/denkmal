@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Denkmal/Db.php';
 
 /**
  * Unknown Location (name)
@@ -9,16 +8,16 @@ require_once 'Denkmal/Db.php';
 class LocationUnknown
 {
 	private $_data = array();
-	
+
 	function __construct($id = null) {
 		if (isset($id)) {
-			$this->_load($id);			
+			$this->_load($id);
 		}
 	}
-	
+
 	/**
 	 * Load a unknown location's properties
-	 * 
+	 *
 	 * @param int $id The unknown location's id
 	 */
 	private function _load($id) {
@@ -28,16 +27,15 @@ class LocationUnknown
 				FROM location_unknown
 				WHERE id=?';
 		$this->_data = $db->fetchRow($sql, $id);
-		
+
 		if (!$this->_data) {
-			require_once 'Denkmal/Exception.php';
 			throw new Denkmal_Exception("LocationUnknown doesn't exist (" .$id.")");
 		}
 	}
-	
+
 	/**
 	 * Return the unknown location's id
-	 * 
+	 *
 	 * @return int Id
 	 */
 	public function getId() {
@@ -46,10 +44,10 @@ class LocationUnknown
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the unknown location's name
-	 * 
+	 *
 	 * @return string Name
 	 */
 	public function getName() {
@@ -58,10 +56,10 @@ class LocationUnknown
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return number of hits (event-adds) for this unknown location
-	 * 
+	 *
 	 * @return int Hits
 	 */
 	public function getHits() {
@@ -70,18 +68,17 @@ class LocationUnknown
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Increase 'hit' for a (new) unknown location
-	 * 
+	 *
 	 * @param string $locationName Location-name
 	 */
 	public static function addHit($locationName) {
-		require_once 'Denkmal/Db.php';
 		$db = Denkmal_Db::get();
 		$db->query('INSERT INTO location_unknown (name) VALUES (?)
   					ON DUPLICATE KEY UPDATE hits=hits+1', array($locationName));
 		Denkmal_Cache::remove('list_locationunknowns_all');
 	}
-	
+
 }

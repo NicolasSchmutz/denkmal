@@ -1,8 +1,5 @@
 <?php
 
-require_once 'Zend/Db.php';
-require_once 'Zend/Db/Table.php';
-require_once 'Zend/Db/Expr.php';
 
 
 /**
@@ -13,27 +10,27 @@ class Denkmal_Db
 {
 
 	private static $_db;
-	
-	
+
+
 	/**
 	* Creates the db-connection if it doesn't already exist and returns it.
 	*
 	* @return Zend_Db_Adapter_Abstract The created or current database-adapter
-	*/ 
-	public static function get() {	
+	*/
+	public static function get() {
 		if (!isset(self::$_db)) {
 			self::_setUp();
 		}
 		return self::$_db;
 	}
-	
-	
+
+
 	/**
 	* Connect to the database and return the created adapter
 	*
 	* @return Zend_Db_Adapter_Abstract The created database-adapter
 	* @throws Exception If connecting is impossible
-	*/ 
+	*/
 	private static function _setUp() {
 		$config = Zend_Registry::get('config');
 		if (isset(self::$_db)) {
@@ -55,13 +52,13 @@ class Denkmal_Db
 		self::$_db = $db;
 		return $db;
 	}
-	
-	
+
+
 	/**
-	 * Return the given value OR a Db-Expr(NULL), if $value===null 
+	 * Return the given value OR a Db-Expr(NULL), if $value===null
 	 *
 	 * @param mixed $value The value
-	 * @return mixed The value (or Db-Expr(NULL) if $value is null) 
+	 * @return mixed The value (or Db-Expr(NULL) if $value is null)
 	 */
 	public static function valueOrNull($value) {
 		if ($value === null) {
@@ -70,5 +67,5 @@ class Denkmal_Db
 			return $value;
 		}
 	}
-	
+
 }

@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Zend/Auth.php';
 
 
 /**
@@ -45,7 +44,7 @@ class Denkmal_Plugin_Ferien extends Zend_Controller_Plugin_Abstract
 			if ($module == 'widget') {
 				exit;
 			}
-			
+
 			$diff = $ferienEnd->sub($now);
 			$request->setParam('days', ceil($diff/60/60/24));
 			$request->setModuleName($this->_redir['module']);

@@ -1,8 +1,6 @@
 <?php
 
 require_once 'Day.php';
-require_once 'Zend/Date.php';
-require_once 'Denkmal/Db.php';
 require_once 'Location.php';
 
 
@@ -13,16 +11,16 @@ require_once 'Location.php';
 class Event
 {
 	private $_data = array();
-	
+
 	function __construct($id = null) {
 		if (isset($id)) {
-			$this->_load($id);		
+			$this->_load($id);
 		}
 	}
-	
+
 	/**
 	 * Load an event's properties
-	 * 
+	 *
 	 * @param int $id The event's id
 	 */
 	private function _load($id) {
@@ -33,16 +31,15 @@ class Event
 				FROM event
 				WHERE id=?';
 		$this->_data = $db->fetchRow($sql, $id);
-		
+
 		if (!$this->_data) {
-			require_once 'Denkmal/Exception.php';
 			throw new Denkmal_Exception("Event doesn't exist (" .$id.")");
 		}
 	}
-	
+
 	/**
 	 * Return the event's id
-	 * 
+	 *
 	 * @return int Id
 	 */
 	public function getId() {
@@ -51,10 +48,10 @@ class Event
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the event's location
-	 * 
+	 *
 	 * @return Location Location
 	 */
 	public function getLocation() {
@@ -63,10 +60,10 @@ class Event
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the event's from-date
-	 * 
+	 *
 	 * @return Zend_Date From
 	 */
 	public function getFrom() {
@@ -75,10 +72,10 @@ class Event
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the event's until-date
-	 * 
+	 *
 	 * @return Zend_Date Until
 	 */
 	public function getUntil() {
@@ -90,7 +87,7 @@ class Event
 
 	/**
 	 * Return the event's description
-	 * 
+	 *
 	 * @return string Description
 	 */
 	public function getDescription() {
@@ -100,10 +97,10 @@ class Event
 		return null;
 	}
 
-	
+
 	/**
 	 * Return whether the event has a star
-	 * 
+	 *
 	 * @return boolean Star
 	 */
 	public function getStar() {
@@ -115,7 +112,7 @@ class Event
 
 	/**
 	 * Return whether the event is enabled
-	 * 
+	 *
 	 * @return boolean Enabled
 	 */
 	public function getEnabled() {
@@ -124,10 +121,10 @@ class Event
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return whether the event is blocked
-	 * 
+	 *
 	 * @return boolean Blocked
 	 */
 	public function getBlocked() {
@@ -136,10 +133,10 @@ class Event
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return whether the event is locked
-	 * 
+	 *
 	 * @return boolean Locked
 	 */
 	public function getLocked() {
@@ -151,7 +148,7 @@ class Event
 
 	/**
 	 * Return the event's audio file
-	 * 
+	 *
 	 * @return string Audio-file
 	 */
 	public function getAudio() {
@@ -160,22 +157,22 @@ class Event
 		}
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * Return audio-suggestions for this event
-	 * 
+	 *
 	 * @return List_Audios Suggested audios
 	 */
 	public function getAudioSuggestions() {
 		require_once 'List/Audios.php';
 		return new List_Audios(List_Audios::TYPE_SUGGESTIONS, $this);
 	}
-	
-	
+
+
 	/**
 	 * Set description
-	 * 
+	 *
 	 * @param string $description Description
 	 * @param boolean $lenghtLimit OPTIONAL Whether to shorten long descriptions (default: true)
 	 * @param boolean $filterFormat OPTIONAL Whether to filter formatting in description (default: true)
@@ -195,19 +192,19 @@ class Event
 		if ($lenghtLimit) {
 			$description = substr($description, 0, 500);
 		}
-		
+
 		if (!$description) {
 			return false;
 		}
-		
+
 		$this->_data['description'] = $description;
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Set the from date/time
-	 * 
+	 *
 	 * @param Zend_Date $from Event-start
 	 * @return boolean True on success
 	 */
@@ -218,10 +215,10 @@ class Event
 		$this->_data['from'] = $from->get(Zend_Date::TIMESTAMP);
 		return true;
 	}
-	
+
 	/**
 	 * Set the until date/time
-	 * 
+	 *
 	 * @param Zend_Date $until Event-end
 	 * @return boolean True on success
 	 */
@@ -234,12 +231,12 @@ class Event
 			return false;
 		}
 		$this->_data['until'] = $until->get(Zend_Date::TIMESTAMP);
-		return true;		
+		return true;
 	}
-	
+
 	/**
 	 * The the event-location
-	 * 
+	 *
 	 * @param Location $location The location
 	 * @return boolean True on success
 	 */
@@ -249,58 +246,58 @@ class Event
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Set star
-	 * 
+	 *
 	 * @param boolean $star Star
 	 */
 	public function setStar($star) {
 		$this->_data['star'] = (int) (boolean) $star;
 	}
-	
+
 	/**
 	 * Set blocked
-	 * 
+	 *
 	 * @param boolean $blocked Blocked
 	 */
 	public function setBlocked($blocked) {
 		$this->_data['blocked'] = (int) (boolean) $blocked;
 	}
-	
+
 	/**
 	 * Set locked
-	 * 
+	 *
 	 * @param boolean $locked Locked
 	 */
 	public function setLocked($locked) {
 		$this->_data['locked'] = (int) (boolean) $locked;
 	}
-	
+
 	/**
 	 * Set enabled
-	 * 
+	 *
 	 * @param boolean $enabled Enabled
 	 */
 	public function setEnabled($enabled) {
 		$this->_data['enabled'] = (int) (boolean) $enabled;
 	}
-	
-	
+
+
 	/**
 	 * Set audio
-	 * 
+	 *
 	 * @param string $audio OPTIONAL Audio-file (no argument -> remove audio)
 	 */
 	public function setAudio($audio = null) {
 		$this->_data['audio'] = $audio;
 	}
-	
-	
-	
-	
 
-	
+
+
+
+
+
 	/**
 	 * Remove this event
 	 */
@@ -312,14 +309,14 @@ class Event
 		$this->_data = array();
 		Denkmal_Cache::clean();
 	}
-	
-	
+
+
 	/**
 	 * Save/create this event
-	 */ 
+	 */
 	public function save() {
 		$db = Denkmal_Db::get();
-		
+
 		$data = $this->_data;
 		if ($from = $this->getFrom()) {
 			$data['from'] = $from->toString('y-MM-dd HH:mm:ss');
@@ -327,7 +324,7 @@ class Event
 		if ($until = $this->getUntil()) {
 			$data['until'] = $until->toString('y-MM-dd HH:mm:ss');
 		}
-		
+
 		if ($this->getId() === null) {
 			// Create event
 			$db->insert('event', $data);
@@ -336,7 +333,7 @@ class Event
 			// Update event
 			$db->update('event', $data, 'id='.$this->getId());
 		}
-		
+
 		Denkmal_Cache::clean();
 	}
 }

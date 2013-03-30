@@ -15,19 +15,19 @@ require_once 'List/Audios.php';
  */
 class Admin_IndexController extends Zend_Controller_Action
 {
-	
+
 	public function init()
 	{
 		$this->_helper->contextSwitch()
 			->addActionContext('audioall', 'json')
 			->addActionContext('description', 'json')
 			->initContext();
-			
+
 		$this->view->addHelperPath('../application/default/views/helpers/');
 		$this->view->headTitle('DENKMAL.ORG Admin');
 	}
-	
-	
+
+
 	/**
 	 * Home/Events page
 	 */
@@ -48,54 +48,52 @@ class Admin_IndexController extends Zend_Controller_Action
 		$this->view->locationUnknowns = $locationUnknowns;
 		$this->view->day = $day;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Edit event-description
 	 */
 	public function descriptionAction() {
 	if (!$this->_hasParam('id')) {
-			require_once 'Denkmal/Exception.php';
 			throw new Denkmal_Exception('No event-id provided');
 		}
-		
+
 		$id = intval($this->_getParam('id'));
 		$description = $this->_getParam('value');
 		$event = new Event($id);
-		
+
 		$event->setDescription($description, false, false);
 		$event->setLocked(true);
 		$event->save();
-		
+
 		$this->_helper->layout->disableLayout();
 		$this->view->event = $event;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Select suggested audio
 	 */
 	public function audioAction() {
 		if (!$this->_hasParam('id')) {
-			require_once 'Denkmal/Exception.php';
 			throw new Denkmal_Exception('No event-id provided');
 		}
-		
+
 		$id = intval($this->_getParam('id'));
 		$event = new Event($id);
 		$this->view->audios = $event->getAudioSuggestions();
 		$this->view->event = $event;
 	}
-	
+
 	/**
 	 * Send all audios, called from AJAX
 	 */
 	public function audioallAction() {
 		$this->view->audios = new List_Audios();
 	}
-	
+
 	/**
 	 * Event-Option called from AJAX
 	 */
@@ -104,11 +102,11 @@ class Admin_IndexController extends Zend_Controller_Action
 		$option = $this->_getParam('option');
 		$state = ($this->_getParam('state') == 'true');
 		$arg = $this->_getParam('arg');
-		
+
 		$reload = false;
 		$save = true;
 		$event = new Event($id);
-		
+
 		switch ($option) {
 			case 'star':
 				$event->setStar($state);
@@ -140,9 +138,9 @@ class Admin_IndexController extends Zend_Controller_Action
 		if ($save) {
 			$event->save();
 		}
-		
+
 		$this->_helper->json->sendJson(array('state' => $state, 'reload' => $reload));
 	}
-	
+
 
 }

@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Zend/Cache.php';
 
 
 /**
@@ -10,16 +9,16 @@ require_once 'Zend/Cache.php';
  */
 class Denkmal_Cache
 {
-	
+
 	private static $_prefix;
-	
+
 	/**
 	 * External cache (apc or filecache)
 	 *
 	 * @var Zend_Cache_Core
 	 */
 	private static $_externalCache;
-	
+
 	/**
 	 * Internal cache
 	 *
@@ -32,15 +31,15 @@ class Denkmal_Cache
 	* Create and return the Cache-object
 	*
 	* @return Zend_Cache_Core The cache-object
-	*/ 
-	public static function get() {	
+	*/
+	public static function get() {
 		if (!isset(self::$_externalCache)) {
 			self::_setUp();
 		}
 		return self::$_externalCache;
 	}
 
-	
+
 	/**
 	 * Test if a cache is available for the given id and (if yes) return it (false else).
 	 * Proxies to Zend_Cache::load()
@@ -56,8 +55,8 @@ class Denkmal_Cache
 		self::$_internalCache[$id] = $data;
 		return $data;
 	}
-	
-	
+
+
 	/**
 	 * Save some data in cache.
 	 * Proxies to Zend_Cache::save()
@@ -71,8 +70,8 @@ class Denkmal_Cache
 		self::$_internalCache[$id] = $data;
 		return self::get()->save($data, self::$_prefix.$id, array(), $specificLifetime);
 	}
-	
-	
+
+
 	/**
 	 * Remove a cache
 	 * Proxies to Zend_Cache::remove()
@@ -84,24 +83,24 @@ class Denkmal_Cache
 		unset(self::$_internalCache[$id]);
 		return self::get()->remove(self::$_prefix.$id);
 	}
-	
+
 	/**
 	 * Clean the whole cache
-	 * 
+	 *
 	 * @return boolean True on success
 	 */
 	public static function clean() {
 		self::$_internalCache = array();
 		return self::get()->clean(Zend_Cache::CLEANING_MODE_ALL);
 	}
-	
-	
+
+
 	/**
 	* Set up the Cache-object.
 	*
 	* @return Zend_Cache_Core The cache-object
 	* @throws My_Exception If creation fails
-	*/ 
+	*/
 	private static function _setUp() {
 		$config = Zend_Registry::get('config');
 		self::$_prefix = $config->cache->prefix;
@@ -128,5 +127,5 @@ class Denkmal_Cache
 		self::$_externalCache = $cache;
 		return $cache;
 	}
-	
+
 }

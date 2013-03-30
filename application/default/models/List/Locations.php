@@ -1,25 +1,24 @@
 <?php
 
 require_once 'List/Abstract.php';
-require_once 'Denkmal/Cache.php';
 require_once 'Location.php';
 
 
 /**
  * List_Locations Model
- * 
- */ 
+ *
+ */
 class List_Locations extends List_Abstract
 {
 	const TYPE_ENABLED = self::TYPE_DEFAULT;	// blocked=0, enabled=1
 	const TYPE_VALID = 2;						// blocked=0
 	const TYPE_DISABLED = 3;					// enabled=0
 	const TYPE_ALL = 4;							//
-	
+
 
 	/**
 	 * Load events
-	 * 
+	 *
 	 */
 	protected function _load() {
 		switch ($this->_type) {
@@ -36,15 +35,14 @@ class List_Locations extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				require_once 'Denkmal/Exception.php';
 				throw new Denkmal_Exception('Invalid locations-list type (' .$this->_type. ')');
 				break;
 		}
 	}
-	
+
 	/**
 	 * Return enabled locations
-	 * 
+	 *
 	 * @param boolean $enabled OPTIONAL Whether the result should be enabled (or disabled) events
 	 * @return array Locations
 	 */
@@ -60,7 +58,6 @@ class List_Locations extends List_Abstract
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$ids = Denkmal_Db::get()->fetchCol($sql, $args);
 			$items = array();
 			foreach ($ids as $id) {
@@ -68,13 +65,13 @@ class List_Locations extends List_Abstract
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
+
 	/**
 	 * Return all valid locations (also disabled)
-	 * 
+	 *
 	 * @return array Locations
 	 */
 	private function _getTypeValid() {
@@ -86,7 +83,6 @@ class List_Locations extends List_Abstract
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$ids = Denkmal_Db::get()->fetchCol($sql);
 			$items = array();
 			foreach ($ids as $id) {
@@ -94,14 +90,14 @@ class List_Locations extends List_Abstract
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
-	
+
+
 	/**
 	 * Return all locations
-	 * 
+	 *
 	 * @return array Locations
 	 */
 	private function _getTypeAll() {
@@ -112,7 +108,6 @@ class List_Locations extends List_Abstract
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$ids = Denkmal_Db::get()->fetchCol($sql);
 			$items = array();
 			foreach ($ids as $id) {
@@ -120,8 +115,8 @@ class List_Locations extends List_Abstract
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
 
 }

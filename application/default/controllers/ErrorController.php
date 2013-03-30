@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Zend/View/Helper/Placeholder/Container/Abstract.php';
 
 
 /**
@@ -32,7 +31,7 @@ class ErrorController extends Zend_Controller_Action
 				}
 				break;
         }
-        
+
         $this->getResponse()->clearBody();
         $this->view->headTitle('DENKMAL.ORG Eventkalender', Zend_View_Helper_Placeholder_Container_Abstract::SET);
 	}

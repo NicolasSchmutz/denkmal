@@ -6,17 +6,17 @@ require_once 'Audio.php';
 
 /**
  * List_Audios Model
- * 
- */ 
+ *
+ */
 class List_Audios extends List_Abstract
 {
 	const TYPE_ALL = self::TYPE_DEFAULT;
 	const TYPE_SUGGESTIONS = 2;				// Suggestions for an event
-	
+
 
 	/**
 	 * Load audios
-	 * 
+	 *
 	 */
 	protected function _load() {
 		switch ($this->_type) {
@@ -27,16 +27,15 @@ class List_Audios extends List_Abstract
 				$this->_items = $this->_getTypeSuggestions($this->_filter);
 				break;
 			default:
-				require_once 'Denkmal/Exception.php';
 				throw new Denkmal_Exception('Invalid audios-list type (' .$this->_type. ')');
 				break;
 		}
 	}
-	
+
 	/**
 	 * Return all audios
-	 * 
-	 * @return array Audios: array(0 => '54 nude honeys - where is love.mp3') 
+	 *
+	 * @return array Audios: array(0 => '54 nude honeys - where is love.mp3')
 	 */
 	private function _getTypeAll() {
 		$items = array();
@@ -47,25 +46,25 @@ class List_Audios extends List_Abstract
 			}
 		}
 		closedir($directory);
-		
+
 		sort($items);
-		
-		return $items;	
+
+		return $items;
 	}
-	
-	
+
+
 	/**
 	 * Return audios suggested for an event
-	 * 
+	 *
 	 * @param Event $event Event to suggest audios for
-	 * @return array Audios: array(0 => '54 nude honeys - where is love.mp3') 
+	 * @return array Audios: array(0 => '54 nude honeys - where is love.mp3')
 	 */
 	private function _getTypeSuggestions($event) {
 		// Get linked words in event-description
 		require_once 'List/Urls.php';
 		$urls = new List_Urls();
 		$words = $urls->strMatches($event->getDescription());
-		
+
 		// Get all audios and find matches with event-description-words
 		$allAudios = new List_Audios();
 		$items = array();
@@ -78,10 +77,10 @@ class List_Audios extends List_Abstract
 				}
 			}
 		}
-		
+
 		sort($items);
-		
-		return $items;	
+
+		return $items;
 	}
-	
+
 }

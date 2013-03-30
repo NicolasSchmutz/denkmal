@@ -1,28 +1,27 @@
 <?php
 
 require_once 'List/Abstract.php';
-require_once 'Denkmal/Cache.php';
 require_once 'Event.php';
 require_once 'Day.php';
 
 
 /**
  * List_Events Model
- * 
- */ 
+ *
+ */
 class List_Events extends List_Abstract
 {
 	const TYPE_DAY = self::TYPE_DEFAULT;
-	const TYPE_DAY_BLOCKED = 2;	
+	const TYPE_DAY_BLOCKED = 2;
 	const TYPE_SEARCH = 3;
 	const TYPE_LOCATION = 4;
 	const TYPE_LOCATION_ALL = 5;	// Also blocked and disabled
 	const TYPE_DISABLED = 6;
-	
+
 
 	/**
 	 * Load events
-	 * 
+	 *
 	 */
 	protected function _load() {
 		switch ($this->_type) {
@@ -45,15 +44,14 @@ class List_Events extends List_Abstract
 				$this->_items = $this->_getTypeDisabled();
 				break;
 			default:
-				require_once 'Denkmal/Exception.php';
 				throw new Denkmal_Exception('Invalid events-list type (' .$this->_type. ')');
 				break;
 		}
 	}
-	
+
 	/**
 	 * Return events by day
-	 * 
+	 *
 	 * @param Day $day Day for which to get events
 	 * @return array Events
 	 */
@@ -73,7 +71,6 @@ class List_Events extends List_Abstract
 						$date->addDay(1)->toString('y-MM-dd HH:mm:ss'));
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$ids = Denkmal_Db::get()->fetchCol($sql, $args);
 			$items = array();
 			foreach ($ids as $id) {
@@ -81,14 +78,14 @@ class List_Events extends List_Abstract
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
-	
+
+
 	/**
 	 * Return blocked events by day
-	 * 
+	 *
 	 * @param Day $day Day for which to get blocked events
 	 * @return array Events
 	 */
@@ -109,7 +106,6 @@ class List_Events extends List_Abstract
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$ids = Denkmal_Db::get()->fetchCol($sql, $args);
 			$items = array();
 			foreach ($ids as $id) {
@@ -117,126 +113,122 @@ class List_Events extends List_Abstract
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
-	
+
+
 	/**
 	 * Return events by search
-	 * 
+	 *
 	 * @param string $q Search-query
 	 * @return array Events
 	 */
 	private function _getTypeSearch($q) {
 		$db = Denkmal_Db::get();
 		$sql = "(SELECT e.id, e.from
-				FROM event e 
+				FROM event e
 				WHERE e.enabled=1 AND e.blocked=0 AND e.id > 0 AND MATCH (e.description) AGAINST(? IN BOOLEAN MODE)
 				)
 				UNION
 				(SELECT e.id, e.from
 				FROM event e, location l
 				WHERE e.locationId=l.id AND e.enabled=1 AND e.blocked=0 AND e.id > 0 AND MATCH(l.name) AGAINST(? IN BOOLEAN MODE)
-				) 
+				)
 				ORDER BY `from` DESC
 				LIMIT 15";
 		$args = array($this->_getSearchQuery($q), $this->_getSearchQuery($q));
-		
-		require_once 'Denkmal/Db.php';
+
 		$ids = $db->fetchCol($sql, $args);
 		$items = array();
 		foreach ($ids as $id) {
 			$items[] = new Event($id);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
+
 	/**
 	 * Return upcoming events by location
-	 * 
+	 *
 	 * @param Location $location Location
 	 * @return array Events
 	 */
 	private function _getTypeLocation($location) {
 		$db = Denkmal_Db::get();
 		$sql = "SELECT e.id
-				FROM event e 
-				WHERE e.enabled=1 
+				FROM event e
+				WHERE e.enabled=1
 					AND e.blocked=0
 					AND e.locationId=?
 					AND e.from >= ?
 				ORDER BY e.`from` ASC
 				LIMIT 10";
 		$args = array($location->getId(), Day::now()->getDate()->toString('y-MM-dd'));
-		
-		require_once 'Denkmal/Db.php';
+
 		$ids = $db->fetchCol($sql, $args);
 		$items = array();
 		foreach ($ids as $id) {
 			$items[] = new Event($id);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
-	
+
+
 	/**
 	 * Return all upcoming events by location
-	 * 
+	 *
 	 * @param Location $location Location
 	 * @return array Events
 	 */
 	private function _getTypeLocationAll($location) {
 		$db = Denkmal_Db::get();
 		$sql = "SELECT e.id
-				FROM event e 
+				FROM event e
 				WHERE e.locationId=?
 					AND e.from >= ?
 				ORDER BY e.`from` ASC";
 		$args = array($location->getId(), Day::now()->getDate()->toString('y-MM-dd'));
-		
-		require_once 'Denkmal/Db.php';
+
 		$ids = $db->fetchCol($sql, $args);
 		$items = array();
 		foreach ($ids as $id) {
 			$items[] = new Event($id);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
-	
+
+
 	/**
 	 * Return disabled upcoming events
-	 * 
+	 *
 	 * @return array Events
 	 */
 	private function _getTypeDisabled() {
 		$db = Denkmal_Db::get();
 		$sql = "SELECT e.id
-				FROM event e 
+				FROM event e
 				WHERE e.enabled=0
 					AND e.from >= ?
 				ORDER BY e.`from` ASC";
 		$args = array(Day::now()->getDate()->toString('y-MM-dd'));
-		
-		require_once 'Denkmal/Db.php';
+
 		$ids = $db->fetchCol($sql, $args);
 		$items = array();
 		foreach ($ids as $id) {
 			$items[] = new Event($id);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
-	
+
+
 	/**
 	 * Return a FULLTEXT-query from a user-query string
-	 * 
-	 * @param string $q User-query 
+	 *
+	 * @param string $q User-query
 	 * @return string FULLTEXT-query
 	 */
 	private function _getSearchQuery($q) {

@@ -1,8 +1,6 @@
 <?php
 
-require_once 'Denkmal/Db.php';
 require_once 'Position.php';
-require_once 'Zend/Uri.php';
 
 
 /**
@@ -12,16 +10,16 @@ require_once 'Zend/Uri.php';
 class Location
 {
 	private $_data = array();
-	
+
 	function __construct($id = null) {
 		if (isset($id)) {
-			$this->_load($id);			
+			$this->_load($id);
 		}
 	}
-	
+
 	/**
 	 * Load a location's properties
-	 * 
+	 *
 	 * @param int $id The location's id
 	 */
 	private function _load($id) {
@@ -31,16 +29,15 @@ class Location
 				FROM location
 				WHERE id=?';
 		$this->_data = $db->fetchRow($sql, $id);
-		
+
 		if (!$this->_data) {
-			require_once 'Denkmal/Exception.php';
 			throw new Denkmal_Exception("Location doesn't exist (" .$id.")");
 		}
 	}
-	
+
 	/**
 	 * Return the location's id
-	 * 
+	 *
 	 * @return int Id
 	 */
 	public function getId() {
@@ -49,10 +46,10 @@ class Location
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the location's name
-	 * 
+	 *
 	 * @return string Name
 	 */
 	public function getName() {
@@ -61,10 +58,10 @@ class Location
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the location's url
-	 * 
+	 *
 	 * @return string Url
 	 */
 	public function getUrl() {
@@ -73,10 +70,10 @@ class Location
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the location's notes
-	 * 
+	 *
 	 * @return string Notes
 	 */
 	public function getNotes() {
@@ -88,7 +85,7 @@ class Location
 
 	/**
 	 * Return whether the location is shown always
-	 * 
+	 *
 	 * @return boolean Showalways
 	 */
 	public function getShowalways() {
@@ -97,10 +94,10 @@ class Location
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return the location's geographical position
-	 * 
+	 *
 	 * @return Position Position
 	 */
 	public function getPosition() {
@@ -109,10 +106,10 @@ class Location
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return whether this location is enabled
-	 * 
+	 *
 	 * @return boolean True if enabled
 	 */
 	public function getEnabled() {
@@ -121,10 +118,10 @@ class Location
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return whether this location is blocked
-	 * 
+	 *
 	 * @return boolean True if blocked
 	 */
 	public function getBlocked() {
@@ -133,36 +130,35 @@ class Location
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Return events for this location
-	 * 
+	 *
 	 * @return List_Events Events list
 	 */
 	public function getEvents() {
 		require_once 'List/Events.php';
 		return new List_Events(List_Events::TYPE_LOCATION, $this);
 	}
-	
+
 	/**
 	 * Return all events for this location (also disabled and blocked)
-	 * 
+	 *
 	 * @return List_Events Events list
 	 */
 	public function getEventsAll() {
 		require_once 'List/Events.php';
 		return new List_Events(List_Events::TYPE_LOCATION_ALL, $this);
 	}
-	
+
 	/**
 	 * Return number of upcoming events
-	 * 
+	 *
 	 * @return int Number of upcoming events
 	 */
 	public function getEventsNum() {
 		require_once 'Day.php';
-		require_once 'Denkmal/Db.php';
 		$db = Denkmal_Db::get();
 		$nowStr = Day::now()->getDate()->toString('y-MM-dd');
 		return $db->fetchOne('SELECT COUNT(1)
@@ -171,10 +167,10 @@ class Location
 									AND e.from >= ?'
 								, array($this->getId(), $nowStr));
 	}
-	
+
 	/**
 	 * Return an event at this location on a given date
-	 * 
+	 *
 	 * @param Zend_Date $date Date
 	 * @return Event The event OR null
 	 */
@@ -184,8 +180,7 @@ class Location
 		$fromStart->setTime('00:00:00')->addHour($morninghour);
 		$fromEnd = $fromStart->copyPart(null);
 		$fromEnd->addDay(1);
-		
-		require_once 'Denkmal/Db.php';
+
 		$db = Denkmal_Db::get();
 		$id = $db->fetchOne('SELECT id
 								FROM event e
@@ -199,11 +194,11 @@ class Location
 		}
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * Return location-aliases
-	 * 
+	 *
 	 * @return array A string-array of aliases
 	 */
 	public function getAliases() {
@@ -211,11 +206,11 @@ class Location
 		$aliases = new List_LocationAliases(List_LocationAliases::TYPE_LOCATION, $this);
 		return $aliases;
 	}
-	
-	
+
+
 	/**
 	 * Set the location's name
-	 * 
+	 *
 	 * @param string $name Name
 	 * @return boolean True on success
 	 */
@@ -229,10 +224,10 @@ class Location
 		$this->_data['name'] = $name;
 		return true;
 	}
-	
+
 	/**
 	 * Set the location's url
-	 * 
+	 *
 	 * @param string $url Url
 	 * @return boolean True on success
 	 */
@@ -243,11 +238,11 @@ class Location
 		$this->_data['url'] = $url;
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Set the location's notes
-	 * 
+	 *
 	 * @param string $notes notes
 	 * @return boolean True on success
 	 */
@@ -255,16 +250,16 @@ class Location
 		$this->_data['notes'] = $notes;
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Save/create this location
 	 */
 	public function save() {
 		$db = Denkmal_Db::get();
-		
+
 		$data = $this->_data;
-		
+
 		if ($this->getId() === null) {
 			// Create location
 			$db->insert('location', $data);
@@ -273,26 +268,26 @@ class Location
 			// Update location
 			$db->update('location', $data, 'id='.$this->getId());
 		}
-		
+
 		Denkmal_Cache::clean();
 	}
-	
-	
+
+
 	/**
 	 * Return a location by its name (resolves aliases)
-	 * 
+	 *
 	 * @param string $locationName The location's name
 	 * @return mixed The location OR null
 	 */
 	public static function getLocation($locationName) {
 		$db = Denkmal_Db::get();
-		
+
 		$id = (int) $db->fetchOne('SELECT id FROM location WHERE name=?', $locationName);
 		if (!$id) {
 			// Try to resolve as an alias
 			$id = (int) $db->fetchOne('SELECT locationId FROM location_alias WHERE name=?', $locationName);
 		}
-		
+
 		if ($id) {
 			return new Location($id);
 		}

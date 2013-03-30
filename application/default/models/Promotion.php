@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Denkmal/Db.php';
 
 
 /**
@@ -10,16 +9,16 @@ require_once 'Denkmal/Db.php';
 class Promotion
 {
 	private $_data = array();
-	
+
 	function __construct($id = null) {
 		if (isset($id)) {
-			$this->_load($id);			
+			$this->_load($id);
 		}
 	}
-	
+
 	/**
 	 * Load a promotion's properties
-	 * 
+	 *
 	 * @param int $id The promotion's id
 	 */
 	private function _load($id) {
@@ -29,16 +28,15 @@ class Promotion
 				FROM promotion
 				WHERE id=?';
 		$this->_data = $db->fetchRow($sql, $id);
-		
+
 		if (!$this->_data) {
-			require_once 'Denkmal/Exception.php';
 			throw new Denkmal_Exception("Promotion doesn't exist (" .$id.")");
 		}
 	}
-	
+
 	/**
 	 * Return the promotion's id
-	 * 
+	 *
 	 * @return int Id
 	 */
 	public function getId() {
@@ -47,10 +45,10 @@ class Promotion
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the promotion's text
-	 * 
+	 *
 	 * @return string Text
 	 */
 	public function getText() {
@@ -62,7 +60,7 @@ class Promotion
 
 	/**
 	 * Return whether the promotion is active
-	 * 
+	 *
 	 * @return boolean Active
 	 */
 	public function getActive() {
@@ -71,57 +69,55 @@ class Promotion
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return number of entries
-	 * 
+	 *
 	 * @return int Number of entries
 	 */
 	public function getEntriesNum() {
-		require_once 'Denkmal/Db.php';
 		$db = Denkmal_Db::get();
 		return $db->fetchOne('SELECT COUNT(1)
 								FROM promotion_entry e
 								WHERE e.promotionId=?'
 								, array($this->getId()));
 	}
-	
+
 	/**
 	 * Return entries
-	 * 
+	 *
 	 * @return array Entries
 	 */
 	public function getEntries() {
 		require_once 'List/PromotionEntries.php';
 		return new List_PromotionEntries(List_PromotionEntries::TYPE_PROMOTION, $this);
 	}
-	
+
 	/**
 	 * Return thanks/success text
-	 * 
+	 *
 	 * @return string Thanks text
 	 */
 	public function getTextThanks() {
 		return 'Vielen Dank fürs Mitmachen.';
 	}
-	
+
 	/**
 	 * Return whether the current user (cookie) has already submitted
-	 * 
+	 *
 	 * @return boolean Has submitted
 	 */
 	public function getHasSubmitted() {
 		@$cookie = $_COOKIE['promotion_' .$this->getId()];
 		return (bool) $cookie;
 	}
-	
+
 	/**
 	 * Return current active promotion
-	 * 
+	 *
 	 * @return Promotion Active promotion OR false
 	 */
 	public static function getActivePromotion() {
-		require_once 'Denkmal/Db.php';
 		$db = Denkmal_Db::get();
 		$id = $db->fetchOne('SELECT id
 								FROM promotion p
@@ -133,11 +129,11 @@ class Promotion
 			return false;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Set active
-	 * 
+	 *
 	 * @param boolean $active Active
 	 * @return boolean True on success
 	 */
@@ -145,21 +141,21 @@ class Promotion
 		$this->_data['active'] = (int) (boolean) $active;
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Save/create this event
-	 */ 
+	 */
 	public function save() {
 		$db = Denkmal_Db::get();
-		
+
 		$data = $this->_data;
-		
+
 		if ($data['active']) {
 			// Deactivate all other promotions
 			$db->update('promotion', array('active' => false));
 		}
-		
+
 		if ($this->getId() === null) {
 			// Create promotion
 			$db->insert('promotion', $data);
@@ -168,7 +164,7 @@ class Promotion
 			// Update promotion
 			$db->update('promotion', $data, 'id='.$this->getId());
 		}
-		
+
 		Denkmal_Cache::clean();
 	}
 }

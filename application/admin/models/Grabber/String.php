@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Zend/Uri.php';
 
 /**
  * String-class used by grabber
@@ -179,4 +178,4 @@ class Grabber_String {
 		return $this->_string;
 	}
 
-} 
+}

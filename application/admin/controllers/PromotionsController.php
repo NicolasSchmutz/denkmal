@@ -10,25 +10,25 @@ require_once 'PromotionEntry.php';
  */
 class Admin_PromotionsController extends Zend_Controller_Action
 {
-	
+
 	public function init()
 	{
 		$this->_helper->contextSwitch()
 			->initContext();
-			
+
 		$this->view->headTitle('DENKMAL.ORG Admin');
 	}
-	
-	
+
+
 	/**
 	 * Index page
 	 */
 	public function indexAction() {
 		$promotions = new List_Promotions();
-		
+
 		$this->view->promotions = $promotions;
 	}
-	
+
 	/**
 	 * Start/stop promotion
 	 */
@@ -38,20 +38,20 @@ class Admin_PromotionsController extends Zend_Controller_Action
 		$promotion = new Promotion($id);
 		$promotion->setActive($active);
 		$promotion->save();
-		
+
 		$this->_redirect('/admin/promotions/');
 	}
-	
+
 	/**
 	 * Entries page
 	 */
 	public function entriesAction() {
 		$id = intval($this->_getParam('id'));
 		$promotion = new Promotion($id);
-		
+
 		$this->view->promotion = $promotion;
 	}
-	
+
 	/**
 	 * Delete an entry
 	 */
@@ -59,8 +59,7 @@ class Admin_PromotionsController extends Zend_Controller_Action
 		$id = intval($this->_getParam('id'));
 		$promotionentry = new PromotionEntry($id);
 		$promotion = $promotionentry->getPromotion();
-		
-		require_once 'Denkmal/Db.php';
+
 		$db = Denkmal_Db::get();
 		$db->delete('promotion_entry', 'id='.$id);
 

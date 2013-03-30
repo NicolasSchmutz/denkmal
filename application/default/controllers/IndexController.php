@@ -15,7 +15,7 @@ require_once 'Promotion.php';
  */
 class IndexController extends Zend_Controller_Action
 {
-	
+
 	public function init()
 	{
 		$this->_helper->layout->disableLayout();
@@ -25,8 +25,8 @@ class IndexController extends Zend_Controller_Action
 			->addActionContext('promotion', array('json'))
 			->initContext();
 	}
-	
-	
+
+
 	/**
 	 * Events page
 	 */
@@ -36,7 +36,7 @@ class IndexController extends Zend_Controller_Action
 		$locations = new List_Locations();
 		$weblinks = new List_Weblinks();
 		$sm = new Event(0);
-				
+
 		if ($this->_getParam('ref') != 'app') {
 			switch ($this->view->device = $this->_getParam('device')) {
 				case 'android':
@@ -58,23 +58,23 @@ class IndexController extends Zend_Controller_Action
 		$this->view->audioMode = $this->_getParam('audioMode');
 		$this->view->headTitle('DENKMAL.ORG Eventkalender');
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Search request
 	 */
 	public function searchAction() {
 		$q = $this->_getParam('q');
 		$events = new List_Events(List_Events::TYPE_SEARCH, $q);
-		
+
 		$this->view->q = $q;
 		$this->view->audiosData = $this->_helper->data->audios($events);
 		$this->view->events = $events;
 	}
-	
-	
+
+
 	/**
 	 * Submit promotion request
 	 */
@@ -82,19 +82,17 @@ class IndexController extends Zend_Controller_Action
 		$name = trim($this->_getParam('name'));
 		$email = trim($this->_getParam('email'));
 		$promotion = Promotion::getActivePromotion();
-		
-		try {			
-			require_once 'Denkmal/Exception.php';
+
+		try {
 			if (strlen($name) == 0) {
 				throw new Denkmal_Exception('Kein Name angegeben');
 			}
-			
-			require_once 'Zend/Validate/EmailAddress.php';
+
 			$validEmail = new Zend_Validate_EmailAddress();
 			if (!$validEmail->isValid($email)) {
 				throw new Denkmal_Exception('Ungültige E-Mail Adresse');
 			}
-			
+
 			require_once 'PromotionEntry.php';
 			$promotionEntry = new PromotionEntry();
 			$promotionEntry->setPromotion($promotion);
@@ -105,9 +103,9 @@ class IndexController extends Zend_Controller_Action
 				throw new Denkmal_Exception('E-Mail Adresse ist schon eingetragen');
 			}
 			$promotionEntry->save();
-			
+
 			setcookie('promotion_'.$promotion->getId(), 1, time()+60*60*24*365, '/');
-			
+
 			$this->view->success = true;
 			$this->view->msg = $promotion->getTextThanks();
 		} catch(Denkmal_Exception $e) {
@@ -115,8 +113,8 @@ class IndexController extends Zend_Controller_Action
 			$this->view->msg = $e->getMessage();
 		}
 	}
-	
-	
+
+
 	/*
 	 * Google verification
 	 */

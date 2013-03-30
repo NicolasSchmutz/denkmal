@@ -5,19 +5,19 @@ require_once 'List/Abstract.php';
 
 /**
  * List_Urls Model
- * 
- */ 
+ *
+ */
 class List_Urls extends List_Abstract
 {
 	const TYPE_ALL = self::TYPE_DEFAULT;
-	
+
 	private $_regexpSearches = null;
 	private $_regexpReplaces = null;
-	
+
 
 	/**
 	 * Load urls
-	 * 
+	 *
 	 */
 	protected function _load() {
 		switch ($this->_type) {
@@ -25,16 +25,15 @@ class List_Urls extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				require_once 'Denkmal/Exception.php';
 				throw new Denkmal_Exception('Invalid urls-list type (' .$this->_type. ')');
 				break;
 		}
 	}
-	
+
 	/**
 	 * Return all urls
-	 * 
-	 * @return array Urls: array(3 => array('name' => 'Sommercasino', 'url' => 'http://www.sommercasino.ch/', 'onlyifmarked' => false)) 
+	 *
+	 * @return array Urls: array(3 => array('name' => 'Sommercasino', 'url' => 'http://www.sommercasino.ch/', 'onlyifmarked' => false))
 	 */
 	private function _getTypeAll() {
 		$cacheId = 'list_urls';
@@ -44,7 +43,6 @@ class List_Urls extends List_Abstract
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$rows = Denkmal_Db::get()->fetchAll($sql);
 			$items = array();
 			foreach ($rows as $row) {
@@ -55,12 +53,12 @@ class List_Urls extends List_Abstract
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
 
-	
-	
+
+
 	/**
 	 * Fill search- and replace-arrays for this URL-list
 	 */
@@ -69,7 +67,7 @@ class List_Urls extends List_Abstract
 			$this->_regexpSearches = array();
 			$this->_regexpReplaces = array();
 			$wordBoundary = '([^\w]|^|$)';
-			
+
 			foreach ($this->get() as $url) {
 				if ($url['onlyifmarked']) {
 					$this->_regexpSearches[] = '#' .$wordBoundary. '\[(\Q' . $url['name'] . '\E)\]' .$wordBoundary. '#ui';
@@ -77,14 +75,14 @@ class List_Urls extends List_Abstract
 					$this->_regexpSearches[] = '#' .$wordBoundary. '(\Q' .$url['name']. '\E)' .$wordBoundary. '#ui';
 				}
 				$this->_regexpReplaces[] = '$1<a href="' .$url['url']. '" class="url" target="_blank">' .$url['name']. '</a>$3';
-			}		
+			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Replace URL-names with URL-links in a string
-	 * 
+	 *
 	 * @param string $str Input-Text
 	 * @return string Text with URL-links
 	 */
@@ -93,10 +91,10 @@ class List_Urls extends List_Abstract
 		$str = preg_replace($this->_regexpSearches, $this->_regexpReplaces, $str, 1);
 		return $str;
 	}
-	
+
 	/**
 	 * Return matching URL-names in a string
-	 * 
+	 *
 	 * @param string $str Input-string
 	 * @return array A string-array of matching names
 	 */
@@ -110,6 +108,6 @@ class List_Urls extends List_Abstract
 		}
 		return $matches;
 	}
-	
-	
+
+
 }

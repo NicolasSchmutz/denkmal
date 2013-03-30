@@ -10,7 +10,7 @@ require_once 'Event.php';
 class Zend_View_Helper_EventIcon extends Zend_Controller_Action_Helper_Abstract
 {
 
-	
+
 	/**
 	 * Return an event-icon
 	 *
@@ -18,14 +18,14 @@ class Zend_View_Helper_EventIcon extends Zend_Controller_Action_Helper_Abstract
 	 * @param boolean $tooltip OPTIONAL Whether to add a tooltip for audio-enabled icons
 	 * @param string $audioMode OPTIONAL The audio-mode ('js', 'link', 'link_widget', 'none')
 	 * @return string HTML for the event-icon
-	 */	
+	 */
 	public function eventIcon($event, $tooltip = true, $audioMode = 'js') {
 		if (!$audioMode) {
 			$audioMode = 'js';
 		}
-		
+
 		$html = '';
-		
+
 		$classes = 'eventicon';
 		$dotStar = ''; $dotAudio = '';
 		if ($event->getStar()) {
@@ -44,7 +44,7 @@ class Zend_View_Helper_EventIcon extends Zend_Controller_Action_Helper_Abstract
 		if (!$tooltip) {
 			$classes .= ' notooltip';
 		}
-		
+
 		switch ($audioMode) {
 			case "js":
 				if ($event->getAudio()) {
@@ -72,11 +72,10 @@ class Zend_View_Helper_EventIcon extends Zend_Controller_Action_Helper_Abstract
 				$html .= '<div class="' .$classes. '"></div>';
 				break;
 			default:
-				require_once 'Denkmal/Exception.php';
 				throw new Denkmal_Exception('Invalid audio-mode (' .$audioMode. ')');
 				break;
 		}
-		
+
 		return $html;
 	}
 }

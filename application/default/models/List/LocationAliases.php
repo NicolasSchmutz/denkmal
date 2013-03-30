@@ -1,22 +1,21 @@
 <?php
 
 require_once 'List/Abstract.php';
-require_once 'Denkmal/Cache.php';
 require_once 'Location.php';
 
 
 /**
  * List_LocationAliases Model
- * 
- */ 
+ *
+ */
 class List_LocationAliases extends List_Abstract
 {
 	const TYPE_LOCATION = self::TYPE_DEFAULT;
-	
+
 
 	/**
 	 * Load aliases
-	 * 
+	 *
 	 */
 	protected function _load() {
 		switch ($this->_type) {
@@ -24,15 +23,14 @@ class List_LocationAliases extends List_Abstract
 				$this->_items = $this->_getTypeLocation($this->_filter);
 				break;
 			default:
-				require_once 'Denkmal/Exception.php';
 				throw new Denkmal_Exception('Invalid locationalias-list type (' .$this->_type. ')');
 				break;
 		}
 	}
-	
+
 	/**
 	 * Return location-aliases by location
-	 * 
+	 *
 	 * @param Location $location Location
 	 * @return array String-array of aliases
 	 */
@@ -46,12 +44,11 @@ class List_LocationAliases extends List_Abstract
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$items = Denkmal_Db::get()->fetchCol($sql, $args);
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
-	
+
 }

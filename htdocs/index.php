@@ -11,8 +11,9 @@ error_reporting(E_ALL|E_STRICT);
 mb_internal_encoding('UTF-8');
 
 $path = array(
-	'../config/',
+	'../',
 	'../classes/',
+	'../config/',
 	'../application/default/models/',
 	'../application/default/views/helpers/',
  	'../application/admin/models/',
@@ -29,10 +30,6 @@ require_once 'Zend/Controller/Router/Route/Regex.php';
 require_once 'Zend/Registry.php';
 require_once 'Zend/Layout.php';
 require_once 'Zend/Session.php';
-require_once 'Denkmal/Plugin/Context.php';
-require_once 'Denkmal/Plugin/Auth.php';
-require_once 'Denkmal/Plugin/Ferien.php';
-require_once 'Denkmal/Cache.php';
 
 require_once 'Config.php';
 $config = new Config();

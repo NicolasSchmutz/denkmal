@@ -6,16 +6,16 @@ require_once 'Weblink.php';
 
 /**
  * List_Locations Model
- * 
- */ 
+ *
+ */
 class List_Weblinks extends List_Abstract
 {
 	const TYPE_ALL = self::TYPE_DEFAULT;
-	
+
 
 	/**
 	 * Load events
-	 * 
+	 *
 	 */
 	protected function _load() {
 		switch ($this->_type) {
@@ -23,15 +23,14 @@ class List_Weblinks extends List_Abstract
 				$this->_items = $this->_getTypeAll();
 				break;
 			default:
-				require_once 'Denkmal/Exception.php';
 				throw new Denkmal_Exception('Invalid weblinks-list type (' .$this->_type. ')');
 				break;
 		}
 	}
-	
+
 	/**
 	 * Return all weblinks
-	 * 
+	 *
 	 * @return array Weblinks
 	 */
 	private function _getTypeAll() {
@@ -42,7 +41,6 @@ class List_Weblinks extends List_Abstract
 
 		if (false === ($items = Denkmal_Cache::load($cacheId))) {
 			// Cache miss
-			require_once 'Denkmal/Db.php';
 			$rows = Denkmal_Db::get()->fetchAll($sql);
 			$items = array();
 			foreach ($rows as $row) {
@@ -50,8 +48,8 @@ class List_Weblinks extends List_Abstract
 			}
 			Denkmal_Cache::save($items, $cacheId);
 		}
-		
-		return $items;	
+
+		return $items;
 	}
 
 }
