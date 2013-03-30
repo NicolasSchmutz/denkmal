@@ -1,0 +1,7 @@
+<?php
+
+echo $this->json(
+	array(	'q' => $this->q,
+			'audios' => $this->audiosData,
+			'html' => $this->partial('utils/list/events.phtml', array('events' => $this->events, 'showDate' => true)),
+	));

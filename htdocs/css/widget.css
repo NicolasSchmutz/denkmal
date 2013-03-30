@@ -1,0 +1,170 @@
+/* RESET */
+
+#denkmal_widget, #denkmal_widget div, #denkmal_widget span, #denkmal_widget applet, #denkmal_widget object, #denkmal_widget iframe,
+#denkmal_widget h1, #denkmal_widget h2, #denkmal_widget h3, #denkmal_widget h4, #denkmal_widget h5, #denkmal_widget h6, #denkmal_widget p, #denkmal_widget blockquote, #denkmal_widget pre,
+#denkmal_widget a, #denkmal_widget abbr, #denkmal_widget acronym, #denkmal_widget address, #denkmal_widget big, #denkmal_widget cite, #denkmal_widget code,
+#denkmal_widget del, #denkmal_widget dfn, #denkmal_widget em, #denkmal_widget font, #denkmal_widget img, #denkmal_widget ins, #denkmal_widget kbd, #denkmal_widget q, #denkmal_widget s, #denkmal_widget samp,
+#denkmal_widget small, #denkmal_widget strike, #denkmal_widget strong, #denkmal_widget sub, #denkmal_widget sup, #denkmal_widget tt, #denkmal_widget var,
+#denkmal_widget dl, #denkmal_widget dt, #denkmal_widget dd, #denkmal_widget ol, #denkmal_widget ul, #denkmal_widget li,
+#denkmal_widget fieldset, #denkmal_widget form, #denkmal_widget label, #denkmal_widget legend,
+#denkmal_widget table, #denkmal_widget caption, #denkmal_widget tbody, #denkmal_widget tfoot, #denkmal_widget thead, #denkmal_widget tr, #denkmal_widget th, #denkmal_widget td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 11px;
+	font-family: inherit;
+	vertical-align: baseline;
+	color: #000000;
+	background-color: transparent;
+}
+#denkmal_widget ol, #denkmal_widget ul {
+	list-style: none;
+}
+
+/* RESET END */
+
+
+#denkmal_widget {
+	width: 214px;
+	background-color: #000000;
+	padding: 3px;
+	display: block;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+	font-style: normal;
+	line-height: 110%;
+	border: 1px solid #545D67;
+}
+
+#denkmal_widget .logo {
+	margin-bottom: 3px;
+}
+
+#denkmal_widget #denkmal_events {
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+}
+	#denkmal_widget #denkmal_events #denkmal_events_more {
+		width: 100%;
+		padding-top: 30px;
+		background-image: url('http://www.denkmal.org/pics/widget/fade.png');
+		background-repeat: repeat-x;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		display: none;
+	}
+		#denkmal_widget #denkmal_events #denkmal_events_more a {
+			display: block;
+			text-align: center;
+			background-color: #000000;
+		}
+			#denkmal_widget #denkmal_events #denkmal_events_more a div {
+				width: 18px;
+				height: 9px;
+				margin: 0 auto;
+				padding-bottom: 2px;
+				background-image: url('http://www.denkmal.org/pics/widget/more.png');
+				cursor: pointer; cursor: hand;
+			}
+			#denkmal_widget #denkmal_events #denkmal_events_more a:hover div {
+				background-position: 0 11px;
+			}
+
+
+#denkmal_widget .events {
+	cursor: default;
+}
+	#denkmal_widget .events li {
+		position: relative;
+		font-style: italic;
+		line-height: 13px;
+		color: #444444;
+		padding: 3px 2px 2px 28px;
+		text-indent: -5px;
+	}
+	#denkmal_widget .events li.a {
+		background-color: #ebebeb;
+	}
+	#denkmal_widget .events li.b {
+		background-color: #f8f8f8;
+	}
+	#denkmal_widget .events li.active {
+		background-color: #96dd6b ;
+	}
+	#denkmal_widget .events li .location {
+		color: black;
+		font-style: normal;
+	}
+	#denkmal_widget .events li .eventicon {
+		position: absolute;
+		left: 6px;
+		top: 2px;
+	}
+	
+#denkmal_widget .eventicon {
+	display: block;
+	width: 14px;
+	height: 14px;
+	overflow: hidden;
+	background-image: url('http://www.denkmal.org/pics/dot.png');
+}
+	
+
+#denkmal_widget .events a {
+	color: #444444;
+	text-decoration: none;
+	font-weight: normal;
+	cursor:pointer; cursor:hand;
+}
+	#denkmal_widget .events a:hover {
+		color: #444444;
+		text-decoration: underline;
+		font-weight: normal;
+	}
+	
+#denkmal_widget a.url {
+	text-decoration: none;
+	border-bottom: 1px dotted #888888;
+}
+	#denkmal_widget a.url:hover {
+		text-decoration: none;
+		border-bottom: 1px solid #555555;
+	}
+	
+
+#denkmal_widget .tooltip {
+	position: absolute;
+	z-index: 10000;
+	display: none;
+	padding: 1px 5px 2px 5px;
+	font-size: 11px;
+	white-space: nowrap;
+	background-color: white;
+	border: 1px solid #bbb;
+	-moz-border-radius: 4px; -webkit-border-radius: 4px;	
+}
+	#denkmal_widget .tooltip_audio {
+		background-color: #96dd6b;
+		border-color: #888;
+		color: #222;
+		height: 11px;
+		line-height: 11px;
+		-moz-border-radius: 3px; -webkit-border-radius: 3px;
+	}
+		#denkmal_widget .tooltip_audio.tooltip_star {
+			background-color: #ffe637;
+		}
+
+
+
+
+
+#denkmal_widget .events { margin-left: 0; }
+#denkmal_widget .events li { font-size: 11px; }
+#denkmal_widget .events li a { font-size: 11px; line-height: 110%; }

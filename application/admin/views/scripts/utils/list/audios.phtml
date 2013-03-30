@@ -1,0 +1,8 @@
+<?php
+echo '<ul class="audios">';
+foreach ($this->audios->get() as $audio) {
+	echo '<li>';
+	echo $this->adminAudio($audio);
+	echo '</li>';
+}
+echo '</ul>';

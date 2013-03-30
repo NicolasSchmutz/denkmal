@@ -1,0 +1,14 @@
+<script type="text/javascript">
+admin.audios._eventId=<?php echo $this->event->getId() ?>;
+</script>
+
+<div class="frame">
+<?php echo $this->addUrls($this->event->getDescription(), $this->event->getId()) ?>
+</div>
+
+<h3>Vorschläge</h3>
+<?php echo $this->partial('utils/list/audios.phtml', array('audios' => $this->audios)) ?>
+
+
+<br/>
+<h3><a href="javascript:;" id="audios_more">Mehr...</a></h3>

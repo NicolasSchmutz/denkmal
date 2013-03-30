@@ -1,0 +1,14 @@
+<?php
+echo '<ul class="events">';
+foreach ($this->events as $event) {
+	$classes = 'event';
+	if ($event->getStar()) $classes .= ' star';
+	if ($event->getBlocked()) $classes .= ' blocked';
+	if ($event->getLocked()) $classes .= ' locked';
+	if ($event->getAudio()) $classes .= ' audio';
+	if ($event->getEnabled()) $classes .= ' enabled';
+	echo '<li id="event' .$event->getId(). '" class="' .$classes. '">';
+	echo $this->adminEvent($event, $this->showDate);
+	echo '</li>';
+}
+echo '</ul>';

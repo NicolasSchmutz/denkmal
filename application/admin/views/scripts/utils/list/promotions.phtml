@@ -1,0 +1,8 @@
+<?php
+echo '<ul class="promotions">';
+foreach ($this->promotions as $promotion) {
+	echo '<li>';
+	echo $this->adminPromotion($promotion);
+	echo '</li>';
+}
+echo '</ul>';

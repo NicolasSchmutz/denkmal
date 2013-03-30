@@ -1,0 +1,11 @@
+<?php echo $this->partial('utils/nav.phtml', array('active' => 'urls')); ?>
+
+<form method="post" action="/admin/urls/create/">
+	Name: <input type="text" name="name" />
+	URL: <input type="text" name="url" value="http://" />
+	Onlyifmarked: <input type="checkbox" name="onlyifmarked" />
+	<input type="submit" value="Neu" />
+</form>
+<div class="clearfix"></div>
+
+<?php echo $this->partial('utils/list/urls.phtml', array('urls' => $this->urls)) ?>

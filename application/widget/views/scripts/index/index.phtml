@@ -1,0 +1,7 @@
+<a href="http://<?php echo $this->domain ?>/" target="_blank">
+<img src="http://<?php echo $this->domain ?>/pics/widget/logo.png" alt="DENKMAL.ORG" class="logo"/>
+</a>
+<div id="denkmal_events">
+	<?php echo $this->partial('utils/list/events.phtml', array('events' => $this->events, 'audioMode' => 'link_widget')) ?>
+	<div id="denkmal_events_more"><a href="javascript:;"><div></div></a></div>
+</div>

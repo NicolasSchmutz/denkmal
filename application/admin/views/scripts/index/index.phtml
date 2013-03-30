@@ -1,0 +1,50 @@
+<?php echo $this->partial('utils/nav.phtml', array('active' => 'home')); ?>
+
+
+<div class="frame">
+	<h3>Sound of the moment</h3>
+	<?php echo $this->partial('utils/list/events.phtml', array('events' => array($this->sm))) ?>
+</div>
+
+<?php
+if ($this->locationUnknowns->num() > 0) {
+	echo '<div class="frame">';
+	echo '<h3>Unknown locations</h3>';
+	echo $this->partial('utils/list/locationUnknowns.phtml', array('locationUnknowns' => $this->locationUnknowns));
+	echo '</div>';
+}
+?>
+
+<?php
+if ($this->locationsDisabled->num() > 0) {
+	echo '<div class="frame">';
+	echo '<h3>Disabled locations</h3>';
+	echo $this->partial('utils/list/locations.phtml', array('locations' => $this->locationsDisabled));
+	echo '</div>';
+}
+?>
+
+<?php
+if ($this->eventsDisabled->num() > 0) {
+	echo '<div class="frame">';
+	echo '<h3>Disabled events</h3>';
+	echo $this->partial('utils/list/events.phtml', array('events' => $this->eventsDisabled, 'showDate' => true));
+	echo '</div>';
+}
+?>
+
+
+<div class="frame">
+	<?php echo $this->adminNavDays($this->day) ?> <?php echo $this->day($this->day, false) ?>
+	<div class="clearfix"></div>
+	
+	<?php
+	if ($this->eventsBlocked->num() > 0) {
+		echo '<h3>Blocked</h3>';
+		echo $this->partial('utils/list/events.phtml', array('events' => $this->eventsBlocked));
+	}
+	?>
+	
+	<h3>Enabled</h3>
+	<?php echo $this->partial('utils/list/events.phtml', array('events' => $this->events)) ?>
+</div>

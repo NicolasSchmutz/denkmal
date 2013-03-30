@@ -1,0 +1,118 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="DENKMAL.ORG - Basels Eventkalender. WaslOift am Rheinknie und wie hört es sich an?" />
+	<meta name="keywords" content="denkmal, basel, bs, denkmal.org, eventkalender, events, party, parties, ausgang, kultur, wasloift" />
+	<?php echo $this->headTitle() ?>
+	<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print"/>
+	<?php echo $this->headLink() ?>
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.address.js"></script>
+	<script type="text/javascript" src="/js/jquery.tooltip.js"></script>
+	<script type="text/javascript" src="/js/swfobject.js"></script>
+	<script type="text/javascript" src="/js/niftyplayer.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	<script type="text/javascript">
+		<?php echo 'map.locations = ' .$this->jsonData($this->locationsData). ';'; ?>
+		<?php echo 'map.events = ' .$this->jsonData($this->eventsData). ';'; ?>
+		<?php echo 'audioplayer.files = ' .$this->jsonData($this->audiosData). ';'; ?>
+		<?php if ($this->sm && $this->sm->getAudio()) { echo 'audioplayer.addFilesData(' .$this->jsonData(array(md5($this->sm->getAudio()) => $this->sm->getAudio())). ');'; } ?>
+		<?php if ($this->autoplay) { echo 'audioplayer.autoplayHash = "' .$this->autoplay. '";'; } ?>
+	</script>
+	<?php echo $this->partial('utils/googleanalytics.phtml') ?>
+</head>
+<body>
+	<div id="header">
+	<div id="header_cont">
+		<div id="menu">
+			<div id="logo">
+				<a href="/" rel="address:/<?php echo $this->today->getWeekdayAbbr() ?>" class="noprint"><img src="/pics/logo.png" alt="DENKMAL.ORG Eventkalender"></a>
+				<img src="/pics/logo_print.png" class="printonly">
+			</div>
+			<div id="obenrechts" class="noprint">
+				<a href="/add">eintragen</a> · <a href="javascript:;" onclick="ui.sendemail('kontakt');">kontakt</a> · <a href="javascript:;" onclick="ui.legal();">rechtliches</a>
+			</div>
+		</div>
+		<div id="navbar" class="noprint">
+			<div id="navbar_left">
+				<div class="box" id="box1">
+					<div class="cont">Events in Basel für<br/><span id="date_str"><?php echo $this->day($this->day); ?></span></div><?php echo $this->navDays($this->day) ?>
+					<a href="/add" id="add"></a>
+				</div>
+				<?php 
+				if ($this->promotion) {
+					echo '<div class="box promotion" id="box2">';
+					echo '<div id="promo_text">' .$this->addUrls($this->promotion->getText(), 'promo'). '</div>';
+					echo '<a href="javascript:;" id="promo_entry"></a>';
+					echo '</div>';
+				} else if ($this->sm->getAudio()) {
+					echo '<div class="box" id="box2">';
+					echo '<div id="sm_player">' .$this->eventIcon($this->sm, false). '</div>';
+					$desc = $this->addUrls($this->sm->getDescription(), 'sm');
+					$height = (preg_match_all('/<br\s*\/?>/i',$desc,$m)+1)*11;
+					echo '<div id="sm_text"><p style="height:' .$height. 'px;margin-top:-' .round($height/2). 'px;">' .$desc. '</p></div>';
+					echo '</div>';
+				}
+				?>
+				<div class="box" id="box3">
+					<div class="cont">
+						<div id="player"><p class="error"><a href="http://get.adobe.com/flashplayer/" target="_blank">Flash-Player</a> benötigt</p></div>
+					</div>
+					<div class="box" id="box3_ad">
+						<div class="cont">Für unterwegs<br/>mit dem Handy!</div>
+					</div>
+				</div>
+				<div class="box" id="box4">
+				</div>
+			</div>
+			<div id="search_cont">
+				<div id="search">
+					<input id="q" type="text" value="" />
+					<a id="clear" href="javascript:;"></a>
+				</div>
+				z.B.: "<a href="javascript:;" onclick="ui.search.boxChange('Dubstep');">Dubstep</a>", "<a href="javascript:;" onclick="ui.search.boxChange('Kopfnuss');">Kopfnuss</a>" ...
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	
+	<div id='sheet'>
+	
+		<div id='search_results_cont'>
+				<div id='search_results' class='popup noprint'>
+				</div>
+		</div>
+		<div id="weblinks_cont">
+				<?php echo $this->partial('utils/list/weblinks.phtml', array('weblinks' => $this->weblinks)) ?>
+		</div>
+		<?php
+			if ($this->promotion) { 
+				echo '<div id="promotion">';
+				if ($this->promotion->getHasSubmitted()) {
+					echo '<p>' .$this->promotion->getTextThanks(). '</p>';
+				} else {			
+					echo '<form>';
+					echo '<label>Voller Name:</label><input type="text" name="name" class="text" />';
+					echo '<label>E-Mail:</label><input type="text" name="email" class="text" />';
+					echo '<div class="clearfix"></div>';
+					echo '<p class="info">Die Gewinner werden per E-Mail benachrichtigt.</p>';
+					echo '<p class="error"></p>';
+					echo '<input type="submit" value="Mitmachen »" class="button" />';
+					echo '</form>';
+				}
+				echo '</div>';
+			}
+		?>
+	
+		<div id="map">
+			<a id="showall" href="javascript:;">Mehr</a>
+		</div>
+	
+		<div id="events">
+			<?php echo $this->partial('utils/list/events.phtml', array('events' => $this->events, 'hasMap' => true)) ?>
+		</div>
+	</div>
+</body></html>

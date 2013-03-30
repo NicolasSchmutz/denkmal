@@ -1,0 +1,8 @@
+<?php
+echo '<ul class="locations">';
+foreach ($this->locations as $location) {
+	echo '<li>';
+	echo $this->adminLocation($location);
+	echo '</li>';
+}
+echo '</ul>';

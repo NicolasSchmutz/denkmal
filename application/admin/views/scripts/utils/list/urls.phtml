@@ -1,0 +1,9 @@
+<?php
+echo '<ul class="urls">';
+foreach ($this->urls->get() as $id => $url) {
+	$url['id'] = $id;
+	echo '<li>';
+	echo $this->adminUrl($url);
+	echo '</li>';
+}
+echo '</ul>';

@@ -1,0 +1,43 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="DENKMAL.ORG - Basels Eventkalender. WaslOift am Rheinknie und wie hört es sich an?" />
+	<meta name="keywords" content="denkmal, basel, bs, denkmal.org, eventkalender, events, party, parties, ausgang, kultur, wasloift" />
+	<?php echo $this->headTitle() ?>
+	<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print"/>
+	<link rel="stylesheet" type="text/css" href="/css/admin.css"/>
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.address.js"></script>
+	<script type="text/javascript" src="/js/jquery.tooltip.js"></script>
+	<script type="text/javascript" src="/js/swfobject.js"></script>
+	<script type="text/javascript" src="/js/niftyplayer.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	<script type="text/javascript" src="/js/admin.js"></script>
+	<script type="text/javascript" src="/js/jquery.jeditable.js"></script>
+	<?php echo $this->headScript() ?>
+</head>
+<body>
+
+	<div id="header" class="simple">
+	<div id="header_cont">
+		<div id="menu">
+			<div id="logo">
+				<a href="/admin/" class="noprint"><img src="/pics/admin/logo.png" alt="DENKMAL.ORG Eventkalender"></a>
+				<img src="/pics/logo_print.png" class="printonly">
+			</div>
+			<div id="obenrechts" class="noprint">
+				<?php if (!$this->hideLogout) {
+					echo '<a href="/admin/auth/logout/">Logout</a>';
+				} ?>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<div id="sheet">
+		<?php echo $this->layout()->content ?>
+	</div>
+	
+</body></html>

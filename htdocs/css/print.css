@@ -1,0 +1,36 @@
+.noprint {
+	display: none;
+}
+
+.printonly {
+	display: block;
+}
+
+a, a.url {
+	text-decoration: none;
+	border-style: none;
+	color: black;
+}
+
+#datum {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	margin-left: 36px;
+}
+
+#header {
+	background-color: white;
+	height: auto;
+}
+
+#map {
+	display: none;
+}
+
+#events {
+	padding: 5px;
+}
+#events .location {
+	font-weight: bold;
+}

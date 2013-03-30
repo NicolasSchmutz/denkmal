@@ -1,0 +1,46 @@
+#sheet table {
+	width: 100%;
+}
+	#sheet table td {
+		vertical-align: top;
+	}
+	#sheet table td#right {
+		width: 373px;
+	}
+	#sheet table td#top .error {
+		margin-top: 6px;
+	}
+
+#events {
+	position: relative;
+	width: 350px;
+	border: 1px solid #444444;
+	margin: 16px 0 0 15px;
+	padding: 3px;
+	display: none;
+	background-color: #f8f8f8;
+}
+
+
+#preview .notice {
+	text-align: center;
+	margin: 6px 10px;
+}
+
+.example {
+	color: #888888;
+	font-style: italic;
+	font-size: 0.8em;
+}
+
+a#home {
+	float: right;
+}
+
+input#submit {
+	float: right;
+}
+
+.what input, .what textarea {
+	width: 300px;
+}

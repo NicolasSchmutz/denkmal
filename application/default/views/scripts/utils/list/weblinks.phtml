@@ -1,0 +1,15 @@
+<?php
+if ($this->weblinks->num() > 0) {
+	echo '<ul id="weblinks" class="noprint">';
+	foreach ($this->weblinks as $weblink) {
+		echo '<li>';
+		echo '<a href="' .$weblink->getUrl(). '" target="_blank">';
+		echo '<span class="domain">' .$weblink->getDomain(). '</span>';
+		if ($weblink->getDescription()) {
+			echo ' <small>' .$weblink->getDescription(). '</small>';
+		}
+		echo '</a>';
+		echo '</li>';
+	}
+	echo '</ul>';
+}

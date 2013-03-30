@@ -1,0 +1,39 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="DENKMAL.ORG - Basels Eventkalender. WaslOift am Rheinknie und wie hört es sich an?" />
+	<meta name="keywords" content="denkmal, basel, bs, denkmal.org, eventkalender, events, party, parties, ausgang, kultur, wasloift" />
+	<?php echo $this->headTitle() ?>
+	<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print"/>
+	<?php echo $this->headLink() ?>
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.address.js"></script>
+	<script type="text/javascript" src="/js/jquery.tooltip.js"></script>
+	<script type="text/javascript" src="/js/swfobject.js"></script>
+	<script type="text/javascript" src="/js/niftyplayer.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	<?php echo $this->headScript() ?>
+	<?php echo $this->partial('utils/googleanalytics.phtml') ?>
+</head>
+<body>
+	<div id="header" class="simple">
+	<div id="header_cont">
+		<div id="menu">
+			<div id="logo">
+				<a href="/" class="noprint"><img src="/pics/logo.png" alt="DENKMAL.ORG Eventkalender"></a>
+				<img src="/pics/logo_print.png" class="printonly">
+			</div>
+			<div id="obenrechts" class="noprint">
+				<a href="/add">eintragen</a> · <a href="javascript:;" onclick="ui.sendemail('kontakt');">kontakt</a> · <a href="javascript:;" onclick="ui.legal();">rechtliches</a>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<div id="sheet">
+		<?php echo $this->layout()->content ?>
+	</div>
+	
+</body></html>

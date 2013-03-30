@@ -1,0 +1,12 @@
+<h2>Event hinzugefügt</h2>
+
+Vielen Dank!
+<br/><br/>
+Ihre Eintragung wurde gespeichert und wird nun überprüft. Dies kann bis zu einem Tag dauern.
+Danach wird der Event, sofern er akzeptiert wurde, auf denkmal.org erscheinen.
+<br/>
+Kontakt: <a href="javascript:;" onclick="ui.sendemail('kontakt');">Email</a> oder 079 / 367 78 97.
+<br/><br/>
+<a href="/add?<?php echo http_build_query(array('location_id' => $this->locationId, 'from_date' => $this->fromDate, 'from_time' => $this->fromTime, 'until_time' => $this->untilTime, 'description' => $this->description)) ?>" class="button">« Ähnlichen Event hinzufügen</a>
+<a href="/add" class="button">« Anderen Event hinzufügen</a>
+<a href="/" class="button special" id="home">Zu Denkmal.org »</a>

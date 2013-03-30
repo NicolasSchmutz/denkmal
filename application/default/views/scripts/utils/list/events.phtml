@@ -1,0 +1,14 @@
+<?php
+if ($this->events->num() > 0) {
+	echo '<ul class="events">';
+	foreach ($this->events as $event) {
+		if (@$alt = !$alt) { $classes='a'; } else { $classes='b'; }
+		if ($this->hasMap) { $classes.=' hasMap'; }
+		echo '<li id="event' .$event->getId(). '" class="' .$classes. '">';
+		echo $this->event($event, $this->showDate, $this->audioMode);
+		echo '</li>';
+	}
+	echo '</ul>';
+} else {
+	echo '<div class="notice">Keine Events.</div>';
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+  <loc>http://www.denkmal.org/</loc>
+  <priority>1.0</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/Mo</loc>
+  <priority>0.5</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/Di</loc>
+  <priority>0.6</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/Mi</loc>
+  <priority>0.6</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/Do</loc>
+  <priority>0.6</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/Fr</loc>
+  <priority>0.9</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/Sa</loc>
+  <priority>0.9</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/So</loc>
+  <priority>0.5</priority>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.denkmal.org/add</loc>
+  <priority>0.9</priority>
+  <changefreq>daily</changefreq>
+</url>
+</urlset>

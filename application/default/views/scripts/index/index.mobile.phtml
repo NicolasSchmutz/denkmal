@@ -1,0 +1,26 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>DENKMAL</title>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+	<link rel="apple-touch-icon" href="/pics/apple-touch-icon.png" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="stylesheet" type="text/css" href="/css/index.mobile.css" />
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.address.js"></script>
+	<script type="text/javascript" src="/js/index.mobile.js"></script>
+	<?php echo $this->partial('utils/googleanalytics.phtml') ?>
+</head>
+<body>
+	<div id="header">
+		<a id="logo" href="/" rel="address:/<?php echo $this->today->getWeekdayAbbr() ?>"><img src="/pics/logo.png" /></a>
+		<?php if ($this->appLink) { echo '<a id="app" href="'.$this->appLink.'"><img src="/pics/app-'.$this->device.'.png" /></a>'; } ?>
+		<div class="clearfix"></div>
+	 	<?php echo $this->navDays($this->day) ?>
+		<div class="clearfix"></div>
+	</div>
+	<div id="events">
+		<?php echo $this->partial('utils/list/events.phtml', array('events' => $this->events, 'audioMode' => 'link')) ?>
+	</div>
+</body></html>
