@@ -6,12 +6,11 @@
 
 ini_set("display_errors","Off");
 
-error_reporting(E_ALL|E_STRICT); 
+error_reporting(E_ALL|E_STRICT);
 
 mb_internal_encoding('UTF-8');
 
 $path = array(
-	'../library/',
 	'../config/',
 	'../classes/',
 	'../application/default/models/',
@@ -22,7 +21,7 @@ $path = array(
 	);
 set_include_path(implode(PATH_SEPARATOR, $path));
 
-
+require_once '../vendor/autoload.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Controller/Router/Route/Static.php';
@@ -61,7 +60,7 @@ Zend_Layout::startMvc();
 // Session
 Zend_Session::start();
 
-// Get front-controller 
+// Get front-controller
 $frontController = Zend_Controller_Front::getInstance();
 $frontController->addModuleDirectory('../application/')
 	->registerPlugin(new Denkmal_Plugin_Context())
@@ -80,6 +79,6 @@ $router->addRoute('googleverification',
 		'google650879864b506576.html',
 		array('module' => 'default', 'controller' => 'index', 'action' => 'googleverification')
 	));
-		
+
 // Run!
 $frontController->dispatch();
