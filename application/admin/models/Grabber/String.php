@@ -165,7 +165,7 @@ class Grabber_String {
 	 * @return string Content
 	 */
 	private function _getUrl($url) {
-		$context = stream_context_create(array('http' => array('ignore_errors' => true)));
+		$context = stream_context_create(array('http' => array('ignore_errors' => true, 'header' => "Content-Type: text/xml; charset=utf-8")));
 		$content = file_get_contents($url, null, $context);
 		$encoding = mb_detect_encoding($content, 'UTF-8, ISO-8859-1');
 		$content = mb_convert_encoding($content, 'UTF-8', $encoding);
