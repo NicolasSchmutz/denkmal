@@ -21,11 +21,15 @@ class Grabber_Location_Cafehammer extends Grabber_Location {
 	protected function _grab() {
 		$str = new Grabber_String('http://cafehammer.ch/');
 
-		foreach ($str->matchAll('#<div id="eventdate">.+? (\d+) (\d+) (\d+) (\d+):(\d+)</div>\s*<div id="eventtitle">(.+?)</div>#') as $matches) {
-			$this->_foundEvent($matches[0]);
-			$from = new Grabber_Date($matches[1], $matches[2], $matches[3]);
-			$from->setTime($matches[4], $matches[5]);
-			$description = new Grabber_Description($matches[6]);
+		$str->replace('#<br>#', "\n", true);
+
+		$str->stripTags();
+
+		foreach ($str->matchAll('#(\d{1,2})\.(\d{1,2})\.(\d{2,4})\s+[-–]\s+(?:ca\.?\s*)?(\d{1,2}):(\d{2})(.+?)\n\s*\n#us') as $match) {
+			$this->_foundEvent($match[0]);
+			$from = new Grabber_Date($match[1], $match[2], $match[3]);
+			$from->setTime($match[4], $match[5]);
+			$description = new Grabber_Description($match[6]);
 			$this->_addEvent($description, $from);
 		}
 	}
